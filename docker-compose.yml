@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  menu:
+    container_name: admin_menu
+    build:
+      context: src
+      args:
+        project: Menu
+
+  authenticated_user:
+    container_name: admin_authenticated_user
+    build:
+      context: src
+      args:
+        project: AuthenticatedUser
+
+  transactions:
+    container_name: admin_transactions
+    build:
+      context: src
+      args:
+        project: Transactions
+
+  users:
+    container_name: admin_users
+    build:
+      context: src
+      args:
+        project: Users
+
+  admin:
+    container_name: admin_app
+    build:
+      context: src
+      args:
+        project: Admin
