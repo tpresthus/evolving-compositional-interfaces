@@ -7,6 +7,8 @@ services:
       context: src
       args:
         project: Menu
+    ports:
+      - 5000:80
 
   authenticated_user:
     container_name: admin_authenticated_user
@@ -14,6 +16,8 @@ services:
       context: src
       args:
         project: AuthenticatedUser
+    ports:
+      - 5001:80
 
   transactions:
     container_name: admin_transactions
@@ -21,6 +25,8 @@ services:
       context: src
       args:
         project: Transactions
+    ports:
+      - 5002:80
 
   users:
     container_name: admin_users
@@ -28,6 +34,8 @@ services:
       context: src
       args:
         project: Users
+    ports:
+      - 5003:80
 
   admin:
     container_name: admin_app
@@ -35,3 +43,5 @@ services:
       context: src
       args:
         project: Admin
+    ports:
+      - 5004:80
