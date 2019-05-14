@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Admin.Authorization;
 using Admin.Views;
 
@@ -19,10 +20,10 @@ namespace Admin
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -39,6 +40,7 @@ namespace Admin
                 options.ViewLocationExpanders.Add(new ViewLocationExpander());
             });
  
+            services.Configure<AuthorizationOptions>(this.configuration.GetSection("Authorization"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddHttpClient<AuthorizationService>();
         }

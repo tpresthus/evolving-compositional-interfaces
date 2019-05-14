@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 
 namespace Admin.Authorization
@@ -8,25 +9,42 @@ namespace Admin.Authorization
     public class AuthorizationService
     {
         private readonly HttpClient httpClient;
+        private Uri baseUrl;
 
-        public AuthorizationService(HttpClient httpClient)
+        public AuthorizationService(HttpClient httpClient, IOptions<AuthorizationOptions> authorizationOptions)
         {
+            if (authorizationOptions == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationOptions));
+            }
+
+            this.baseUrl = authorizationOptions.Value.BaseUrl;
             this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
         public async Task<User> GetAuthorizedUser()
         {
-            using (var response = await this.httpClient.GetAsync("http://authorization"))
+            try
             {
-                if (response == null)
+                using (var response = await this.httpClient.GetAsync(this.baseUrl))
                 {
-                    throw new InvalidOperationException("The authorization response was null");
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(responseBody);
+                    return new User(jobject["name"]?.ToString());
                 }
+            }
+            catch (Exception exception)
+            {
+                throw new AuthorizationException(this.baseUrl, exception);
+            }
+        }
 
-                response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
-                var jobject = JObject.Parse(responseBody);
-                return new User(jobject["name"].ToString());
+        private class AuthorizationException : ApplicationException
+        {
+            public AuthorizationException(Uri requestUrl, Exception innerException)
+                : base($"The authorization request to <{requestUrl}> failed.", innerException)
+            {
             }
         }
     }
