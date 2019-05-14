@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Authorization
 {
@@ -29,10 +30,23 @@ namespace Authorization
 
             app.Run(async (context) =>
             {
-                var json = JsonConvert.SerializeObject(new
+                var contractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                };
+
+                var settings = new JsonSerializerSettings
+                {
+                    ContractResolver = contractResolver,
+                    Formatting = Formatting.Indented
+                };
+
+                var user = new
                 {
                     Name = "Spongebob Squarepants"
-                });
+                };
+
+                var json = JsonConvert.SerializeObject(user, settings);
 
                 var headers = context.Response.GetTypedHeaders();
 
