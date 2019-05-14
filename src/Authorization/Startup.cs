@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace Authorization
 {
@@ -27,7 +29,16 @@ namespace Authorization
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                var json = JsonConvert.SerializeObject(new
+                {
+                    Name = "Spongebob Squarepants"
+                });
+
+                var headers = context.Response.GetTypedHeaders();
+
+                headers.ContentType = new MediaTypeHeaderValue("application/json");
+                
+                await context.Response.WriteAsync(json);
             });
         }
     }
