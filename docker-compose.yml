@@ -1,6 +1,19 @@
 version: "3.7"
 
 services:
+  admin:
+    container_name: admin_app
+    build:
+      context: src
+      args:
+        project: Admin
+    ports:
+      - 5000:80
+    links:
+      - authorization
+    depends_on:
+      - authorization
+
   menu:
     container_name: admin_menu
     build:
@@ -8,7 +21,7 @@ services:
       args:
         project: Menu
     ports:
-      - 5000:80
+      - 5001:80
 
   authorization:
     container_name: admin_authorization
@@ -17,7 +30,7 @@ services:
       args:
         project: Authorization
     ports:
-      - 5001:80
+      - 5002:80
 
   transactions:
     container_name: admin_transactions
@@ -26,7 +39,7 @@ services:
       args:
         project: Transactions
     ports:
-      - 5002:80
+      - 5003:80
 
   users:
     container_name: admin_users
@@ -34,14 +47,5 @@ services:
       context: src
       args:
         project: Users
-    ports:
-      - 5003:80
-
-  admin:
-    container_name: admin_app
-    build:
-      context: src
-      args:
-        project: Admin
     ports:
       - 5004:80
