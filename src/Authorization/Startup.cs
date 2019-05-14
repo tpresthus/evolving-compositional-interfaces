@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AuthenticatedUser
+namespace Authorization
 {
     public class Startup
     {
@@ -27,7 +27,7 @@ namespace AuthenticatedUser
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("AuthenticatedUser");
+                await context.Response.WriteAsync("Hello World!");
             });
         }
     }

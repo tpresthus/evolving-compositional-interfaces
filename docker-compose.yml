@@ -10,12 +10,12 @@ services:
     ports:
       - 5000:80
 
-  authenticated_user:
-    container_name: admin_authenticated_user
+  authorization:
+    container_name: admin_authorization
     build:
       context: src
       args:
-        project: AuthenticatedUser
+        project: Authorization
     ports:
       - 5001:80
 
