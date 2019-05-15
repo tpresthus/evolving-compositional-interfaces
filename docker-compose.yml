@@ -29,8 +29,8 @@ services:
       context: src
       args:
         project: Authorization
-    ports:
-      - 5002:80
+    expose:
+      - "5002"
 
   transactions:
     container_name: admin_transactions
