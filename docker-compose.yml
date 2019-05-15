@@ -9,10 +9,6 @@ services:
         project: Admin
     ports:
       - 5000:80
-    links:
-      - authorization
-    depends_on:
-      - authorization
 
   menu:
     container_name: admin_menu

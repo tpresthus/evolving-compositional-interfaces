@@ -16,7 +16,6 @@ namespace Authorization
         {
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls("http://localhost:5002/")
                 .Build()
                 .Run();
         }
