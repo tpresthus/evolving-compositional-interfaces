@@ -22,7 +22,7 @@ namespace Admin.Authorization
             this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
-        public async Task<User> GetAuthorizedUser()
+        public async Task<User> GetAuthorizedUserAsync()
         {
             try
             {

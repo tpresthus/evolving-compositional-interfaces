@@ -23,7 +23,7 @@ namespace Admin.Navigation
             this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
-        public async Task<Menu> GetMenu()
+        public async Task<Menu> GetMenuAsync()
         {
             try
             {

@@ -22,8 +22,8 @@ namespace Admin.Home
             
         public async Task<IActionResult> Index()
         {
-            var menu = await this.navigationService.GetMenu();
-            var user = await this.authorizationService.GetAuthorizedUser();
+            var menu = await this.navigationService.GetMenuAsync();
+            var user = await this.authorizationService.GetAuthorizedUserAsync();
             var homeViewModel = new HomeViewModel(menu, user);
             return View(homeViewModel);
         }
