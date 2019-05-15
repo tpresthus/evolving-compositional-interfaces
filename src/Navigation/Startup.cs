@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Menu
+namespace Navigation
 {
     public class Startup
     {
@@ -27,7 +27,7 @@ namespace Menu
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Menu");
+                await context.Response.WriteAsync("Hello World!");
             });
         }
     }

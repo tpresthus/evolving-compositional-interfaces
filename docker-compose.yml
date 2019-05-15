@@ -10,12 +10,12 @@ services:
     ports:
       - 5000:80
 
-  menu:
-    container_name: admin_menu
+  navigation:
+    container_name: admin_navigation
     build:
       context: src
       args:
-        project: Menu
+        project: Navigation
     ports:
       - 5001:80
 
