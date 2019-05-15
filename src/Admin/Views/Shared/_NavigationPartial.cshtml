@@ -1,0 +1,16 @@
+@model Admin.Navigation.MenuViewModel
+
+<div class="container">
+    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Admin</a>
+
+    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+        <ul class="navbar-nav flex-grow-1">
+            @foreach (var menuItem in Model.Items)
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="#">@menuItem.Title</a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

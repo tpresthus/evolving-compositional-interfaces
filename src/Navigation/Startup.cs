@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Navigation
 {
@@ -25,9 +28,35 @@ namespace Navigation
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Run(async (context) =>
+          app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                var contractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                };
+
+                var settings = new JsonSerializerSettings
+                {
+                    ContractResolver = contractResolver,
+                    Formatting = Formatting.Indented
+                };
+
+                var menu = new
+                {
+                    Items = new[]
+                    {
+                        new { Title = "Users" },
+                        new { Title = "Transactions" },
+                    }
+                };
+
+                var json = JsonConvert.SerializeObject(menu, settings);
+
+                var headers = context.Response.GetTypedHeaders();
+
+                headers.ContentType = new MediaTypeHeaderValue("application/json");
+                
+                await context.Response.WriteAsync(json);
             });
         }
     }

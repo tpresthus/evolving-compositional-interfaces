@@ -16,8 +16,8 @@ services:
       context: src
       args:
         project: Navigation
-    ports:
-      - 5001:80
+    expose:
+      - "5001"
 
   authorization:
     container_name: admin_authorization

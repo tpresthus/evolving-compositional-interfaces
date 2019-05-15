@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Admin.Navigation;
 using Admin.Authorization;
 using Admin.Views;
 
@@ -40,8 +41,10 @@ namespace Admin
                 options.ViewLocationExpanders.Add(new ViewLocationExpander());
             });
  
+            services.Configure<NavigationOptions>(this.configuration.GetSection("Navigation"));
             services.Configure<AuthorizationOptions>(this.configuration.GetSection("Authorization"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddHttpClient<NavigationService>();
             services.AddHttpClient<AuthorizationService>();
         }
 
