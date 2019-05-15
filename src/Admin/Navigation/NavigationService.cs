@@ -10,7 +10,7 @@ namespace Admin.Navigation
     public class NavigationService
     {
         private readonly HttpClient httpClient;
-        private Uri baseUrl;
+        private readonly Uri baseUrl;
 
         public NavigationService(HttpClient httpClient, IOptions<NavigationOptions> navigationOptions)
         {

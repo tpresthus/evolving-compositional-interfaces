@@ -9,7 +9,7 @@ namespace Admin.Authorization
     public class AuthorizationService
     {
         private readonly HttpClient httpClient;
-        private Uri baseUrl;
+        private readonly Uri baseUrl;
 
         public AuthorizationService(HttpClient httpClient, IOptions<AuthorizationOptions> authorizationOptions)
         {
