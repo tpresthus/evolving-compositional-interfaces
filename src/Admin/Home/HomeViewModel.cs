@@ -1,3 +1,4 @@
+using System;
 using Admin.Authorization;
 
 namespace Admin.Home
@@ -6,14 +7,9 @@ namespace Admin.Home
     {
         public HomeViewModel(User user)
         {
-            if (user == null)
-            {
-                throw new System.ArgumentNullException(nameof(user));
-            }
-
-            AuthorizedUserName = user.Name;
+            User = new UserViewModel(user);
         }
 
-        public string AuthorizedUserName { get; }
+        public UserViewModel User { get; }
     }
 }
