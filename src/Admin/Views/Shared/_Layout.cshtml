@@ -21,7 +21,8 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <partial name="_NavigationPartial" model="@Model.Menu" />
-            <partial name="_AuthorizationPartial" model="@Model.User" />
+            @{/* TODO: Figure out how to use <vc:authorization/> instead of the ugly '@await Component.' syntax */}
+            @await Component.InvokeAsync("Admin.Authorization.Authorization", Model.User)
         </nav>
     </header>
 

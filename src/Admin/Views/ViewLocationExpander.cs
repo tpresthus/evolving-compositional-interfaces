@@ -18,7 +18,8 @@ namespace Admin.Views
         private IEnumerable<string> FeatureFolders => new string[]
         {
             "/{1}/{0}" + RazorViewEngine.ViewExtension,
-            "/{1}s/{0}" + RazorViewEngine.ViewExtension
+            "/{1}s/{0}" + RazorViewEngine.ViewExtension,
+            "/Views/{0}" + RazorViewEngine.ViewExtension
         };
 }
 }
