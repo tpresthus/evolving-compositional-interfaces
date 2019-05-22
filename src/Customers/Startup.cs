@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Users
+namespace Customers
 {
     public class Startup
     {
@@ -27,7 +27,7 @@ namespace Users
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Users");
+                await context.Response.WriteAsync("Customers");
             });
         }
     }

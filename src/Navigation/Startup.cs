@@ -47,8 +47,8 @@ namespace Navigation
                     {
                         new
                         {
-                            Title = "Users",
-                            Id = "users"
+                            Title = "Customers",
+                            Id = "customers"
                         },
                         new
                         {

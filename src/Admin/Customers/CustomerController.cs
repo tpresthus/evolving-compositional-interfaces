@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Admin.Users
+namespace Admin.Customers
 {
-    [Route("users")]
-    public class UserController : Controller
+    [Route("customers")]
+    public class CustomerController : Controller
     {
         public IActionResult Index()
         {

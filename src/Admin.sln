@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Navigation", "Navigation\Na
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions", "Transactions\Transactions.csproj", "{9932463F-B8C8-40F2-A834-31E2CDBDC6F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Users", "Users\Users.csproj", "{E7C75C27-5385-4739-9E13-CC4035ECC497}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customers", "Customers\Customers.csproj", "{E7C75C27-5385-4739-9E13-CC4035ECC497}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

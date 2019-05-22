@@ -37,11 +37,11 @@ services:
     ports:
       - 5003:80
 
-  users:
-    container_name: admin_users
+  customers:
+    container_name: admin_customers
     build:
       context: src
       args:
-        project: Users
+        project: Customers
     ports:
       - 5004:80

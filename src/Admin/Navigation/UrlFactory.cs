@@ -26,8 +26,8 @@ namespace Admin.Navigation
                 case "transactions":
                     return this.urlHelper.Action("Index", "Transaction", null, "http");
 
-                case "users":
-                    return this.urlHelper.Action("Index", "User", null, "http");
+                case "customers":
+                    return this.urlHelper.Action("Index", "Customer", null, "http");
             }
 
             throw new ArgumentException($"Unknown Id '{id}'.", nameof(id));
