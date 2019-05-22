@@ -4,15 +4,11 @@ using Admin.Authorization;
 
 namespace Admin.Home
 {
-    public class HomeViewModel
+    public class HomeViewModel : BaseViewModel
     {
         public HomeViewModel(Menu menu, User user, UrlFactory urlFactory)
+            : base(menu, user, urlFactory)
         {
-            User = new UserViewModel(user);
-            Menu = new MenuViewModel(menu, urlFactory);
         }
-
-        public UserViewModel User { get; }
-        public MenuViewModel Menu { get; }
     }
 }
