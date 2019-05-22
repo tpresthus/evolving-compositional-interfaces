@@ -4,7 +4,7 @@ namespace Admin.Navigation
 {
     public class MenuItemViewModel
     {
-        public MenuItemViewModel(MenuItem menuItem)
+        public MenuItemViewModel(MenuItem menuItem, Uri url)
         {
             if (menuItem == null)
             {
@@ -12,8 +12,11 @@ namespace Admin.Navigation
             }
 
             Title = menuItem.Title;
+            Url = url?.ToString() ?? throw new ArgumentNullException(nameof(url));
         }
 
         public string Title { get; }
+
+        public string Url { get; }
     }
 }

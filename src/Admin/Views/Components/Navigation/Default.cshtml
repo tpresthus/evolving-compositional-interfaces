@@ -8,7 +8,7 @@
             @foreach (var menuItem in Model.Items)
             {
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">@menuItem.Title</a>
+                    <a class="nav-link text-dark" href="@menuItem.Url">@menuItem.Title</a>
                 </li>
             }
         </ul>

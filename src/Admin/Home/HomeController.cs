@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.Extensions;
 using Admin.Navigation;
 using Admin.Authorization;
 using Admin.Errors;
@@ -19,12 +20,14 @@ namespace Admin.Home
             this.navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             this.authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
         }
-            
+
         public async Task<IActionResult> Index()
         {
             var menu = await this.navigationService.GetMenuAsync();
             var user = await this.authorizationService.GetAuthorizedUserAsync();
-            var homeViewModel = new HomeViewModel(menu, user);
+            var urlFactory = new UrlFactory(Url);
+            var homeViewModel = new HomeViewModel(menu, user, urlFactory);
+
             return View(homeViewModel);
         }
     }

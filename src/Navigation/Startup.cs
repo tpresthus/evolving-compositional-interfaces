@@ -45,8 +45,16 @@ namespace Navigation
                 {
                     Items = new[]
                     {
-                        new { Title = "Users" },
-                        new { Title = "Transactions" },
+                        new
+                        {
+                            Title = "Users",
+                            Id = "users"
+                        },
+                        new
+                        {
+                            Title = "Transactions",
+                            Id = "transactions"
+                        }
                     }
                 };
 
@@ -55,7 +63,7 @@ namespace Navigation
                 var headers = context.Response.GetTypedHeaders();
 
                 headers.ContentType = new MediaTypeHeaderValue("application/json");
-                
+
                 await context.Response.WriteAsync(json);
             });
         }

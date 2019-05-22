@@ -40,7 +40,7 @@ namespace Admin
             {
                 options.ViewLocationExpanders.Add(new ViewLocationExpander());
             });
- 
+
             services.Configure<NavigationOptions>(this.configuration.GetSection("Navigation"));
             services.Configure<AuthorizationOptions>(this.configuration.GetSection("Authorization"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

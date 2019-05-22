@@ -6,10 +6,10 @@ namespace Admin.Home
 {
     public class HomeViewModel
     {
-        public HomeViewModel(Menu menu, User user)
+        public HomeViewModel(Menu menu, User user, UrlFactory urlFactory)
         {
             User = new UserViewModel(user);
-            Menu = new MenuViewModel(menu);
+            Menu = new MenuViewModel(menu, urlFactory);
         }
 
         public UserViewModel User { get; }

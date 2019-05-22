@@ -33,7 +33,7 @@ namespace Admin.Navigation
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var jobject = JObject.Parse(responseBody);
                     var jtoken = jobject["items"];
-                    var menuItems = jtoken.Select(x => new MenuItem(x["title"]?.ToString()));
+                    var menuItems = jtoken.Select(MapMenuItem);
                     return new Menu(menuItems);
                 }
             }
@@ -41,6 +41,13 @@ namespace Admin.Navigation
             {
                 throw new NavigationException(this.baseUrl, exception);
             }
+        }
+
+        private MenuItem MapMenuItem(JToken jToken)
+        {
+            var title = jToken["title"]?.ToString();
+            var id = jToken["id"]?.ToString();
+            return new MenuItem(title, id);
         }
 
         private class NavigationException : ApplicationException
