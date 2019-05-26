@@ -1,13 +1,35 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Admin.Authorization;
 using Admin.Navigation;
 
 namespace Admin.Customers
 {
-    public class CustomersViewModel : BaseViewModel
+    public class CustomersViewModel : BaseViewModel, IEnumerable<CustomerViewModel>
     {
-        public CustomersViewModel(Menu menu, User user, UrlFactory urlFactory)
+        private readonly IEnumerable<CustomerViewModel> customers;
+
+        public CustomersViewModel(IEnumerable<Customer> customers, Menu menu, User user, UrlFactory urlFactory)
             : base(menu, user, urlFactory)
         {
+            if (customers == null)
+            {
+                throw new ArgumentNullException(nameof(customers));
+            }
+
+            this.customers = customers.Select(customer => new CustomerViewModel(customer));
+        }
+
+        public IEnumerator<CustomerViewModel> GetEnumerator()
+        {
+            return customers.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return customers.GetEnumerator();
         }
     }
 }

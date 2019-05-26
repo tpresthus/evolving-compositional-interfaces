@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Admin.Navigation;
 using Admin.Authorization;
 using Admin.Views;
+using Admin.Customers;
 
 namespace Admin
 {
@@ -43,9 +44,11 @@ namespace Admin
 
             services.Configure<NavigationOptions>(this.configuration.GetSection("Navigation"));
             services.Configure<AuthorizationOptions>(this.configuration.GetSection("Authorization"));
+            services.Configure<CustomerOptions>(this.configuration.GetSection("Customer"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddHttpClient<NavigationService>();
             services.AddHttpClient<AuthorizationService>();
+            services.AddHttpClient<CustomerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
