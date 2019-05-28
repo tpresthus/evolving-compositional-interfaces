@@ -15,6 +15,7 @@ using Admin.Navigation;
 using Admin.Authorization;
 using Admin.Views;
 using Admin.Customers;
+using Admin.Transactions;
 
 namespace Admin
 {
@@ -45,10 +46,12 @@ namespace Admin
             services.Configure<HttpServiceOptions>("NavigationOptions", this.configuration.GetSection("Navigation"));
             services.Configure<HttpServiceOptions>("AuthorizationOptions", this.configuration.GetSection("Authorization"));
             services.Configure<HttpServiceOptions>("CustomerOptions", this.configuration.GetSection("Customer"));
+            services.Configure<HttpServiceOptions>("TransactionOptions", this.configuration.GetSection("Transaction"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddHttpClient<NavigationService>();
             services.AddHttpClient<AuthorizationService>();
             services.AddHttpClient<CustomerService>();
+            services.AddHttpClient<TransactionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

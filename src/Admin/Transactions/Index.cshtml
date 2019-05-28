@@ -7,4 +7,29 @@
 
 <div class="text-center">
     <h1 class="display-4">Transactions</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Step</th>
+                <th>Type</th>
+                <th>Payer</th>
+                <th>Payee</th>
+                <th class="text-right">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@transaction.Step</td>
+                <td>@transaction.Type</td>
+                <td>@transaction.Payer.Name</td>
+                <td>@transaction.Payee.Name</td>
+                <td class="text-right">@transaction.Amount</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
 </div>
