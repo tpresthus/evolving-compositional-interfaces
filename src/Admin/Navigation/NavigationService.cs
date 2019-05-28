@@ -12,14 +12,14 @@ namespace Admin.Navigation
         private readonly HttpClient httpClient;
         private readonly Uri baseUrl;
 
-        public NavigationService(HttpClient httpClient, IOptions<NavigationOptions> navigationOptions)
+        public NavigationService(HttpClient httpClient, IOptionsSnapshot<HttpServiceOptions> httpServiceOptions)
         {
-            if (navigationOptions == null)
+            if (httpServiceOptions == null)
             {
-                throw new ArgumentNullException(nameof(navigationOptions));
+                throw new ArgumentNullException(nameof(httpServiceOptions));
             }
 
-            this.baseUrl = navigationOptions.Value.BaseUrl;
+            this.baseUrl = httpServiceOptions.Get("NavigationOptions").BaseUrl;
             this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 

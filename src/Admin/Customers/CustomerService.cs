@@ -15,14 +15,14 @@ namespace Admin.Customers
         private readonly HttpClient httpClient;
         private readonly Uri baseUrl;
 
-        public CustomerService(HttpClient httpClient, IOptions<CustomerOptions> authorizationOptions)
+        public CustomerService(HttpClient httpClient, IOptionsSnapshot<HttpServiceOptions> httpServiceOptions)
         {
-            if (authorizationOptions == null)
+            if (httpServiceOptions == null)
             {
-                throw new ArgumentNullException(nameof(authorizationOptions));
+                throw new ArgumentNullException(nameof(httpServiceOptions));
             }
 
-            this.baseUrl = authorizationOptions.Value.BaseUrl;
+            this.baseUrl = httpServiceOptions.Get("CustomerOptions").BaseUrl;
             this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 

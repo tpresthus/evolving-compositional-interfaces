@@ -42,9 +42,9 @@ namespace Admin
                 options.ViewLocationExpanders.Add(new ViewLocationExpander());
             });
 
-            services.Configure<NavigationOptions>(this.configuration.GetSection("Navigation"));
-            services.Configure<AuthorizationOptions>(this.configuration.GetSection("Authorization"));
-            services.Configure<CustomerOptions>(this.configuration.GetSection("Customer"));
+            services.Configure<HttpServiceOptions>("NavigationOptions", this.configuration.GetSection("Navigation"));
+            services.Configure<HttpServiceOptions>("AuthorizationOptions", this.configuration.GetSection("Authorization"));
+            services.Configure<HttpServiceOptions>("CustomerOptions", this.configuration.GetSection("Customer"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddHttpClient<NavigationService>();
             services.AddHttpClient<AuthorizationService>();

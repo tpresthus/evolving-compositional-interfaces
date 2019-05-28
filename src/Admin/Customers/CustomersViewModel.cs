@@ -24,12 +24,12 @@ namespace Admin.Customers
 
         public IEnumerator<CustomerViewModel> GetEnumerator()
         {
-            return customers.GetEnumerator();
+            return this.customers.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return customers.GetEnumerator();
+            return this.customers.GetEnumerator();
         }
     }
 }

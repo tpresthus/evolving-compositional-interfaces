@@ -1,8 +1,8 @@
 using System;
 
-namespace Admin.Authorization
+namespace Admin
 {
-    public class AuthorizationOptions
+    public class HttpServiceOptions
     {
         public Uri BaseUrl { get; set; }
     }

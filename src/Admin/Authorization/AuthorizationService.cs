@@ -11,14 +11,14 @@ namespace Admin.Authorization
         private readonly HttpClient httpClient;
         private readonly Uri baseUrl;
 
-        public AuthorizationService(HttpClient httpClient, IOptions<AuthorizationOptions> authorizationOptions)
+        public AuthorizationService(HttpClient httpClient, IOptionsSnapshot<HttpServiceOptions> httpServiceOptions)
         {
-            if (authorizationOptions == null)
+            if (httpServiceOptions == null)
             {
-                throw new ArgumentNullException(nameof(authorizationOptions));
+                throw new ArgumentNullException(nameof(httpServiceOptions));
             }
 
-            this.baseUrl = authorizationOptions.Value.BaseUrl;
+            this.baseUrl = httpServiceOptions.Get("AuthorizationOptions").BaseUrl;
             this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
