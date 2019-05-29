@@ -1,5 +1,3 @@
-using System;
-
 namespace Admin.Errors
 {
     public class ErrorViewModel
