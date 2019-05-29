@@ -47,6 +47,7 @@ namespace Customers
                     {
                         new
                         {
+                            Id = "C1231006815",
                             Name = "Michael J. Utter",
                             Address = new {
                                 Street = "3355 North Street",
@@ -63,6 +64,7 @@ namespace Customers
                         },
                         new
                         {
+                            Id = "C1666544295",
                             Name = "Suzan J. Steinke",
                             Address = new {
                                 Street = "2317 Shadowmar Drive",
@@ -79,6 +81,7 @@ namespace Customers
                         },
                         new
                         {
+                            Id = "C1305486145",
                             Name = "Brent W. Ashley",
                             Address = new {
                                 Street = "1578 Heavner Avenue",
@@ -95,6 +98,7 @@ namespace Customers
                         },
                         new
                         {
+                            Id = "C840083671",
                             Name = "Sarah J. Westerman",
                             Address = new {
                                 Street = "2261 Everette Alley",
@@ -111,6 +115,7 @@ namespace Customers
                         },
                         new
                         {
+                            Id = "C2048537720",
                             Name = "Dennis S. Snyder",
                             Address = new {
                                 Street = "1900 Hill Haven Drive",

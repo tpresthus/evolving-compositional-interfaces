@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Admin.Authorization;
 using Admin.Navigation;
@@ -28,6 +29,21 @@ namespace Admin.Customers
             var urlFactory = new UrlFactory(Url);
 
             var customersViewModel = new CustomersViewModel(customers, menu, user, urlFactory);
+
+            return View(customersViewModel);
+        }
+
+        [Route("{id}")]
+        public async Task<IActionResult> Customer(string id)
+        {
+            var menu = await this.navigationService.GetMenuAsync();
+            var user = await this.authorizationService.GetAuthorizedUserAsync();
+            var customers = await this.customerService.GetCustomers();
+            // TODO: Add customer/id route to the Customer API.
+            var customer = customers.First(c => c.Id == id);
+            var urlFactory = new UrlFactory(Url);
+
+            var customersViewModel = new CustomerViewModel(customer, menu, user, urlFactory);
 
             return View(customersViewModel);
         }

@@ -46,12 +46,13 @@ namespace Admin.Customers
 
         private static Customer MapCustomer(JToken jtoken)
         {
+            var id = jtoken["id"]?.ToString();
             var name = jtoken["name"]?.ToString();
             var email = jtoken["email"]?.ToString();
             var birthDateString = jtoken["birthDate"]?.ToString();
             if (DateTime.TryParseExact(birthDateString, "yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out var birthDate))
             {
-                return new Customer(name, email, birthDate);
+                return new Customer(id, name, email, birthDate);
             }
 
             throw new FormatException("Invalid birth date format");

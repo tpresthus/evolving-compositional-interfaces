@@ -1,3 +1,4 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model Admin.Customers.CustomersViewModel
 @{
     ViewData["Title"] = "Customers";
@@ -20,7 +21,7 @@
         @foreach (var customer in Model)
         {
             <tr>
-                <td>@customer.Name</td>
+                <td><a asp-action="Customer" asp-route-id="@customer.Id">@customer.Name</a></td>
                 <td>@customer.Email</td>
                 <td>@customer.BirthDate</td>
             </tr>

@@ -19,7 +19,7 @@ namespace Admin.Customers
                 throw new ArgumentNullException(nameof(customers));
             }
 
-            this.customers = customers.Select(customer => new CustomerViewModel(customer));
+            this.customers = customers.Select(customer => new CustomerViewModel(customer, menu, user, urlFactory));
         }
 
         public IEnumerator<CustomerViewModel> GetEnumerator()
