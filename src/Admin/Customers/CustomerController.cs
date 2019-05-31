@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Admin.Authorization;
 using Admin.Navigation;
+using Admin.Transactions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.Customers
@@ -11,13 +12,15 @@ namespace Admin.Customers
     public class CustomerController : Controller
     {
         private readonly CustomerService customerService;
+        private readonly TransactionService transactionService;
         private readonly NavigationService navigationService;
         private readonly AuthorizationService authorizationService;
 
-        public CustomerController(CustomerService customerService, NavigationService navigationService, AuthorizationService authorizationService)
+        public CustomerController(CustomerService customerService, TransactionService transactionService, NavigationService navigationService, AuthorizationService authorizationService)
         {
-            this.customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
-            this.navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+           this.customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
+            this.transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
+             this.navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             this.authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
         }
 

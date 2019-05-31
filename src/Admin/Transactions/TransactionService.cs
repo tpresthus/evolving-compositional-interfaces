@@ -43,6 +43,26 @@ namespace Admin.Transactions
             }
         }
 
+        public async Task<IEnumerable<Transaction>> GetTransactionsForCustomer(string customerId)
+        {
+            try
+            {
+                using (var response = await this.httpClient.GetAsync(this.baseUrl))
+                {
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(responseBody);
+                    var jtoken = jobject["transactions"];
+                    return jtoken
+                        .Select(MapTransaction)
+                        .Where(transaction => transaction.Payee.Name == customerId || transaction.Payer.Name == customerId);
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new TransactionException(this.baseUrl, exception);
+            }
+        }
         private static Transaction MapTransaction(JToken jtoken)
         {
             var step = jtoken["step"].Value<int>();

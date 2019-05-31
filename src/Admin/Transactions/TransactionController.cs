@@ -30,5 +30,17 @@ namespace Admin.Transactions
 
             return View(transactionsViewModel);
         }
+
+        [Route("{id}")]
+        public async Task<IActionResult> CustomerTransactions(string id)
+        {
+            var menu = await this.navigationService.GetMenuAsync();
+            var user = await this.authorizationService.GetAuthorizedUserAsync();
+            var transactions = await this.transactionService.GetTransactionsForCustomer(id);
+            var urlFactory = new UrlFactory(Url);
+            var transactionsViewModel = new TransactionsViewModel(transactions, menu, user, urlFactory);
+
+            return View("Index", transactionsViewModel);
+        }
     }
 }

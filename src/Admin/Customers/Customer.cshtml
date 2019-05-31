@@ -8,4 +8,27 @@
 
 <div class="text-center">
     <h1 class="display-4">@Model.Name</h1>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th scope="row" class="text-right">Born</th>
+                <td class="text-left">@Model.BirthDate</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-right">Email</th>
+                <td class="text-left"><a href="mailto:@Model.Email">@Model.Email</a></td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-right">
+                    Transactions
+                </th>
+                <td class="text-left">
+                    <a asp-controller="Transaction"
+                       asp-action="CustomerTransactions"
+                       asp-route-id="@Model.Id">@Model.Name's transactions</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
