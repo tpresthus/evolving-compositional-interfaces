@@ -54,10 +54,10 @@ namespace Admin.Transactions
             var payerNewBalance = payerToken["newBalance"].Value<decimal>();
             var payer = new Party(payerName, payerOldBalance, payerNewBalance);
             var payeeToken = jtoken["payee"];
-            var payeeName = payerToken["name"]?.ToString();
-            var payeeOldBalance = payerToken["oldBalance"].Value<decimal>();
-            var payeeNewBalance = payerToken["newBalance"].Value<decimal>();
-            var payee = new Party(payerName, payerOldBalance, payerNewBalance);
+            var payeeName = payeeToken["name"]?.ToString();
+            var payeeOldBalance = payeeToken["oldBalance"].Value<decimal>();
+            var payeeNewBalance = payeeToken["newBalance"].Value<decimal>();
+            var payee = new Party(payeeName, payeeOldBalance, payeeNewBalance);
             var isFraud = jtoken["isFraud"].Value<bool>();
             var isFlaggedFraud = jtoken["isFlaggedFraud"].Value<bool>();
             return new Transaction(step, type, amount, payer, payee, isFraud, isFlaggedFraud);
