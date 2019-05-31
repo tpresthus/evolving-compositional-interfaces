@@ -1,3 +1,4 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model Admin.Transactions.TransactionsViewModel
 @{
     ViewData["Title"] = "Transactions";
@@ -23,8 +24,16 @@
         {
             <tr>
                 <td>@transaction.Type</td>
-                <td>@transaction.Payer.Name</td>
-                <td>@transaction.Payee.Name</td>
+                <td>
+                    <a asp-controller="Customer"
+                       asp-action="Customer"
+                       asp-route-id="@transaction.Payer.Name">@transaction.Payer.Name</a>
+                </td>
+                <td>
+                    <a asp-controller="Customer"
+                       asp-action="Customer"
+                       asp-route-id="@transaction.Payee.Name">@transaction.Payee.Name</a>
+                </td>
                 <td>@transaction.IsFraud</td>
                 <td class="text-right">@transaction.Amount</td>
             </tr>
