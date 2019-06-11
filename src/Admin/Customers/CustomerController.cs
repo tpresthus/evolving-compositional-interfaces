@@ -45,8 +45,8 @@ namespace Admin.Customers
             // TODO: Add customer/id route to the Customer API.
             var customer = customers.First(c => c.Id == id);
             var urlFactory = new UrlFactory(Url);
-
-            var customersViewModel = new CustomerViewModel(customer, menu, user, urlFactory);
+            var transactions = await this.transactionService.GetTransactionsForCustomer(id);
+            var customersViewModel = new CustomerViewModel(customer, menu, user, urlFactory, transactions);
 
             return View(customersViewModel);
         }

@@ -3,29 +3,71 @@
     ViewData["Title"] = Model.Name;
 }
 
-<div class="text-center">
+<div class="container">
     <h1 class="display-4">@Model.Name</h1>
 
-    <table class="table table-striped">
-        <tbody>
-            <tr>
-                <th scope="row" class="text-right">Born</th>
-                <td class="text-left">@Model.BirthDate</td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-right">Email</th>
-                <td class="text-left"><a href="mailto:@Model.Email">@Model.Email</a></td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-right">
-                    Transactions
-                </th>
-                <td class="text-left">
-                    <a asp-controller="Transaction"
-                       asp-action="CustomerTransactions"
-                       asp-route-id="@Model.Id">@Model.Name's transactions</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-6">
+            <table class="table table-striped ">
+                <tbody>
+                    <tr>
+                        <th scope="row" class="text-right">Born</th>
+                        <td class="text-left">@Model.BirthDate</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-right">Email</th>
+                        <td class="text-left"><a href="mailto:@Model.Email">@Model.Email</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-right">
+                            Transactions
+                        </th>
+                        <td class="text-left">
+                            <a asp-controller="Transaction"
+                            asp-action="CustomerTransactions"
+                            asp-route-id="@Model.Id">@Model.Name's transactions</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col">
+            <h2>Transactions</h2>
+            @if (Model.Transactions.Any())
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Payer</th>
+                            <th>Payee</th>
+                            <th>Fraud</th>
+                            <th class="text-right">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>                    
+                    @foreach (var transaction in Model.Transactions)
+                    {
+                        <tr>
+                            <td>@transaction.Type</td>
+                            <td>
+                                <a asp-controller="Customer"
+                                asp-action="Customer"
+                                asp-route-id="@transaction.Payer.Name">@transaction.Payer.Name</a>
+                            </td>
+                            <td>
+                                <a asp-controller="Customer"
+                                asp-action="Customer"
+                                asp-route-id="@transaction.Payee.Name">@transaction.Payee.Name</a>
+                            </td>
+                            <td>@transaction.IsFraud</td>
+                            <td class="text-right">@transaction.Amount</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
 </div>
