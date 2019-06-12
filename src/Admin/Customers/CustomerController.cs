@@ -41,14 +41,27 @@ namespace Admin.Customers
         {
             var menu = await this.navigationService.GetMenuAsync();
             var user = await this.authorizationService.GetAuthorizedUserAsync();
-            var customers = await this.customerService.GetCustomers();
-            // TODO: Add customer/id route to the Customer API.
-            var customer = customers.First(c => c.Id == id);
+            var customer = await this.customerService.GetCustomer(id);
             var urlFactory = new UrlFactory(Url);
             var transactions = await this.transactionService.GetTransactionsForCustomer(id);
             var customersViewModel = new CustomerViewModel(customer, menu, user, urlFactory, transactions);
 
             return View(customersViewModel);
+        }
+
+        [Route("{id}/edit")]
+        public async Task<IActionResult> Edit(string id)
+        {
+            return await Customer(id);
+        }
+
+        [HttpPost]
+        [Route("{id}/update")]
+        public async Task<IActionResult> Update([FromRoute] string id, [FromForm] CustomerFormModel customerFormModel)
+        {
+            var customer = customerFormModel.Map(id);
+            await this.customerService.UpdateCustomer(customer);
+            return RedirectToAction("Customer", new { Id = id });
         }
     }
 }

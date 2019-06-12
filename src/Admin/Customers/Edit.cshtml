@@ -4,34 +4,26 @@
 }
 
 <div class="container">
-    <h1 class="display-4">@Model.Name</h1>
-
     <div class="row">
         <div class="col-6">
-            <table class="table table-striped ">
-                <tbody>
-                    <tr>
-                        <th scope="row" class="text-right">Born</th>
-                        <td class="text-left">@Model.BirthDate</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-right">Email</th>
-                        <td class="text-left"><a href="mailto:@Model.Email">@Model.Email</a></td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-right">
-                            Transactions
-                        </th>
-                        <td class="text-left">
-                            <a asp-controller="Transaction"
-                            asp-action="CustomerTransactions"
-                            asp-route-id="@Model.Id">@Model.Name's transactions</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <form asp-action="Update" asp-route-id="@Model.Id">
+                <div class="form-group">
+                    <label asp-for="Name">Name</label>
+                    <input asp-for="Name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="BirthDate">Born</label>
+                    <input asp-for="BirthDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" class="form-control">
+                </div>
+                <div class="form-group">
 
-            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
         </div>
 
         <div class="col">
@@ -48,7 +40,7 @@
                             <th class="text-right">Amount</th>
                         </tr>
                     </thead>
-                    <tbody>                    
+                    <tbody>
                     @foreach (var transaction in Model.Transactions)
                     {
                         <tr>
