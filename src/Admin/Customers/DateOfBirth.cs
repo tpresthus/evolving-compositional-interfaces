@@ -1,9 +1,11 @@
 using System;
+using System.Globalization;
 
 namespace Admin.Customers
 {
     public class DateOfBirth
     {
+        private const string Format = "yyyy-MM-dd";
         private readonly DateTime dateOfBirth;
 
         public DateOfBirth(DateTime dateOfBirth)
@@ -17,12 +19,16 @@ namespace Admin.Customers
 
         public int Day => this.dateOfBirth.Day;
 
-
         public override string ToString()
         {
-            return this.dateOfBirth.ToString("yyyy-MM-dd");
+            return this.dateOfBirth.ToString(Format);
         }
 
+        public static DateOfBirth Parse(string birthDate)
+        {
+            var dateTime = DateTime.ParseExact(birthDate, Format, CultureInfo.InvariantCulture);
+            return new DateOfBirth(dateTime);
+        }
 
         public class YearOfBirth
         {

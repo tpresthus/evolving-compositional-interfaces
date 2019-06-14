@@ -6,6 +6,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Net.Http.Headers;
 
 namespace Admin.Customers
 {
@@ -44,16 +47,67 @@ namespace Admin.Customers
             }
         }
 
+        public async Task<Customer> GetCustomer(string id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            var url = new Uri(this.baseUrl, id);
+
+            try
+            {
+                using (var response = await this.httpClient.GetAsync(url))
+                {
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(responseBody);
+                    return MapCustomer(jobject);
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new CustomerException(url, exception);
+            }
+        }
+
+        public async Task<Customer> UpdateCustomer(Customer customer)
+        {
+            if (customer == null)
+            {
+                throw new ArgumentNullException(nameof(customer));
+            }
+
+            var url = new Uri(this.baseUrl, customer.Id);
+
+            try
+            {
+                var customerRequestModel = new CustomerRequestModel(customer);
+                var json = customerRequestModel.ToString();
+                var content = new StringContent(json);
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                using (var response = await this.httpClient.PutAsync(url, content))
+                {
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(responseBody);
+                    return MapCustomer(jobject);
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new CustomerException(url, exception);
+            }
+        }
+
         private static Customer MapCustomer(JToken jtoken)
         {
             var id = jtoken["id"]?.ToString();
             var name = jtoken["name"]?.ToString();
             var email = jtoken["email"]?.ToString();
-            var birthDateString = jtoken["birthDate"]?.ToString();
-            if (DateTime.TryParseExact(birthDateString, "yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out var birthDate))
-            {
-                return new Customer(id, name, email, birthDate);
-            }
+            var birthDate = jtoken["birthDate"]?.ToString();
+            return new Customer(id, name, email, birthDate);
 
             throw new FormatException("Invalid birth date format");
         }
@@ -61,8 +115,42 @@ namespace Admin.Customers
         private class CustomerException : ApplicationException
         {
             public CustomerException(Uri requestUrl, Exception innerException)
-                : base($"The customer retrieval request to <{requestUrl}> failed.", innerException)
+                : base($"The customer operation request to <{requestUrl}> failed.", innerException)
             {
+            }
+        }
+
+        private class CustomerRequestModel
+        {
+            public CustomerRequestModel(Customer customer)
+            {
+                Id = customer.Id;
+                Name = customer.Name;
+                Email = customer.Email.ToString();
+                BirthDate = customer.BirthDate.ToString();
+            }
+
+            public string Id { get; }
+
+            public string Name { get; }
+
+            public string Email { get; }
+
+            public string BirthDate { get; }
+
+            public override string ToString()
+            {
+                var contractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                };
+
+                var settings = new JsonSerializerSettings
+                {
+                    ContractResolver = contractResolver
+                };
+
+                return JsonConvert.SerializeObject(this, settings);
             }
         }
     }
