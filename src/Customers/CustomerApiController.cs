@@ -23,12 +23,6 @@ namespace Customers
         public IActionResult Customer(string id)
         {
             var customer = this.customerRepository.GetCustomer(id);
-
-            if (customer == null)
-            {
-                return Json(new { Text = "Not found!"});
-            }
-
             return Json(customer);
         }
 
@@ -37,16 +31,7 @@ namespace Customers
         public IActionResult Update([FromRoute] string id, [FromBody] CustomerFormModel customerFormModel)
         {
             var customer = customerFormModel.Map(id);
-
-            try
-            {
-                customer = this.customerRepository.Update(customer);
-            }
-            catch (CustomerNotFoundException)
-            {
-                return NotFound();
-            }
-
+            this.customerRepository.Update(customer);
             return Json(customer);
         }
     }
