@@ -9,12 +9,19 @@ namespace Admin.Customers
 {
     public class CustomerViewModel : BaseViewModel
     {
-        public CustomerViewModel(Customer customer, Menu menu, User user, UrlFactory urlFactory)
-            : this(customer, menu, user, urlFactory, Enumerable.Empty<Transaction>())
+        public CustomerViewModel(CustomerResponse customerResponse, Menu menu, User user, UrlFactory urlFactory, IEnumerable<Transaction> transactions)
+            : this(customerResponse?.Customer, menu, user, urlFactory)
         {
+            if (transactions == null)
+            {
+                throw new ArgumentNullException(nameof(transactions));
+            }
+
+            Json = customerResponse.Json;
+            Transactions = transactions.Select(MapTransaction);
         }
 
-        public CustomerViewModel(Customer customer, Menu menu, User user, UrlFactory urlFactory, IEnumerable<Transaction> transactions)
+        public CustomerViewModel(Customer customer, Menu menu, User user, UrlFactory urlFactory)
             : base(menu, user, urlFactory)
         {
             if (customer == null)
@@ -22,16 +29,11 @@ namespace Admin.Customers
                 throw new ArgumentNullException(nameof(customer));
             }
 
-            if (transactions == null)
-            {
-                throw new ArgumentNullException(nameof(transactions));
-            }
-
             Id = customer.Id;
             Name = customer.Name;
             BirthDate = customer.BirthDate.ToString();
             Email = customer.Email.ToString();
-            Transactions = transactions.Select(MapTransaction);
+            Transactions = Enumerable.Empty<TransactionViewModel>();
         }
 
         public string Id { get; }
@@ -43,10 +45,11 @@ namespace Admin.Customers
         public string Email { get; }
 
         public IEnumerable<TransactionViewModel> Transactions { get; }
+        public string Json { get; }
 
         private TransactionViewModel MapTransaction(Transaction transaction)
         {
-            return new TransactionViewModel(transaction);            
+            return new TransactionViewModel(transaction);
         }
     }
 }

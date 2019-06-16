@@ -47,7 +47,7 @@ namespace Admin.Customers
             }
         }
 
-        public async Task<Customer> GetCustomer(string id)
+        public async Task<CustomerResponse> GetCustomer(string id)
         {
             if (id == null)
             {
@@ -62,8 +62,7 @@ namespace Admin.Customers
                 {
                     response.EnsureSuccessStatusCode();
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    var jobject = JObject.Parse(responseBody);
-                    return MapCustomer(jobject);
+                    return MapCustomerResponse(responseBody);
                 }
             }
             catch (Exception exception)
@@ -72,7 +71,7 @@ namespace Admin.Customers
             }
         }
 
-        public async Task<Customer> UpdateCustomer(Customer customer)
+        public async Task<CustomerResponse> UpdateCustomer(Customer customer)
         {
             if (customer == null)
             {
@@ -91,8 +90,7 @@ namespace Admin.Customers
                 {
                     response.EnsureSuccessStatusCode();
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    var jobject = JObject.Parse(responseBody);
-                    return MapCustomer(jobject);
+                    return MapCustomerResponse(responseBody);
                 }
             }
             catch (Exception exception)
@@ -108,8 +106,13 @@ namespace Admin.Customers
             var email = jtoken["email"]?.ToString();
             var birthDate = jtoken["birthDate"]?.ToString();
             return new Customer(id, name, email, birthDate);
+        }
 
-            throw new FormatException("Invalid birth date format");
+        private static CustomerResponse MapCustomerResponse(string json)
+        {
+            var jobject = JObject.Parse(json);
+            var customer = MapCustomer(jobject);
+            return new CustomerResponse(customer, json);
         }
 
         private class CustomerException : ApplicationException
