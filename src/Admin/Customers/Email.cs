@@ -26,5 +26,10 @@ namespace Admin.Customers
         }
 
         public override string ToString() => this.email;
+
+        public static implicit operator Email(string email)
+        {
+            return new Email(email);
+        }
     }
 }

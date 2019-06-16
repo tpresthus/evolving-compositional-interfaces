@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace Customers
 {
@@ -11,7 +12,12 @@ namespace Customers
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<CustomerRepository>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.Formatting = Formatting.Indented;
+                });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

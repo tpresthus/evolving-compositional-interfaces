@@ -8,9 +8,15 @@ namespace Admin.Customers
 
         public string Email { get; set; }
 
+        public string Phone { get; set; }
+
         public Customer Map(string id)
         {
-            return new Customer(id, Name, Email, BirthDate);
+            return new Customer(id, Name, BirthDate)
+            {
+                Email = Email,
+                Phone = Phone
+            };
         }
     }
 }

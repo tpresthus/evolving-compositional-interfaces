@@ -103,9 +103,17 @@ namespace Admin.Customers
         {
             var id = jtoken["id"]?.ToString();
             var name = jtoken["name"]?.ToString();
-            var email = jtoken["email"]?.ToString();
             var birthDate = jtoken["birthDate"]?.ToString();
-            return new Customer(id, name, email, birthDate);
+            var email = jtoken["email"]?.ToString();
+            var ssn = jtoken["ssn"]?.ToString();
+            var phone = jtoken["phone"]?.ToString();
+
+            return new Customer(id, name, birthDate)
+            {
+                Email = email,
+                Ssn = ssn,
+                Phone = phone
+            };
         }
 
         private static CustomerResponse MapCustomerResponse(string json)
@@ -131,6 +139,7 @@ namespace Admin.Customers
                 Name = customer.Name;
                 Email = customer.Email.ToString();
                 BirthDate = customer.BirthDate.ToString();
+                Phone = customer.Phone;
             }
 
             public string Id { get; }
@@ -140,6 +149,8 @@ namespace Admin.Customers
             public string Email { get; }
 
             public string BirthDate { get; }
+
+            public string Phone { get; }
 
             public override string ToString()
             {

@@ -5,11 +5,10 @@ namespace Admin.Customers
 {
     public class Customer
     {
-        public Customer(string id, string name, string email, string birthDate)
+        public Customer(string id, string name, string birthDate)
         {
             Id = id ?? throw new ArgumentNullException(nameof(id));
             BirthDate = DateOfBirth.Parse(birthDate);
-            Email = new Email(email);
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
@@ -17,8 +16,12 @@ namespace Admin.Customers
 
         public string Name { get; }
 
-        public Email Email { get; }
+        public Email Email { get; set; }
 
         public DateOfBirth BirthDate { get; }
+
+        public string Ssn { get; set; }
+
+        public string Phone { get; set; }
     }
 }

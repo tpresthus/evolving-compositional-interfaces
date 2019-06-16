@@ -32,6 +32,8 @@ namespace Admin.Customers
             Id = customer.Id;
             Name = customer.Name;
             BirthDate = customer.BirthDate.ToString();
+            Ssn = customer.Ssn;
+            Phone = customer.Phone;
             Email = customer.Email.ToString();
             Transactions = Enumerable.Empty<TransactionViewModel>();
         }
@@ -43,6 +45,10 @@ namespace Admin.Customers
         public string BirthDate { get; }
 
         public string Email { get; }
+
+        public string Ssn { get; }
+
+        public string Phone { get; }
 
         public IEnumerable<TransactionViewModel> Transactions { get; }
         public string Json { get; }

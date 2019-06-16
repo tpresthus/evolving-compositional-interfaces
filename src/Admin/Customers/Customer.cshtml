@@ -19,9 +19,15 @@
                         <td class="text-left"><a href="mailto:@Model.Email">@Model.Email</a></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="text-right">
-                            Transactions
-                        </th>
+                        <th scope="row" class="text-right">Ssn</th>
+                        <td class="text-left">@Model.Ssn</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-right">Phone</th>
+                        <td class="text-left">@Model.Phone</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-right">Transactions</th>
                         <td class="text-left">
                             <a asp-controller="Transaction"
                             asp-action="CustomerTransactions"
@@ -48,7 +54,7 @@
                             <th class="text-right">Amount</th>
                         </tr>
                     </thead>
-                    <tbody>                    
+                    <tbody>
                     @foreach (var transaction in Model.Transactions)
                     {
                         <tr>
