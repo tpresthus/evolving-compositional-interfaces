@@ -35,21 +35,25 @@ namespace Admin.Customers
             Ssn = customer.Ssn;
             Phone = customer.Phone;
             Email = customer.Email.ToString();
+            UserName = customer.UserName;
+            Website = customer.Website;
             Transactions = Enumerable.Empty<TransactionViewModel>();
+
+            if (customer.Address != null)
+            {
+                Address = new AddressViewModel(customer.Address);
+            }
         }
 
         public string Id { get; }
-
         public string Name { get; }
-
         public string BirthDate { get; }
-
         public string Email { get; }
-
         public string Ssn { get; }
-
         public string Phone { get; }
-
+        public AddressViewModel Address { get; set; }
+        public string UserName { get; set; }
+        public string Website { get; set; }
         public IEnumerable<TransactionViewModel> Transactions { get; }
         public string Json { get; }
 

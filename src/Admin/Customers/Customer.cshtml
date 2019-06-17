@@ -31,6 +31,24 @@
                                 <td class="text-left">@Model.Phone</td>
                             </tr>
                             <tr>
+                                <th scope="row" class="text-right">UserName</th>
+                                <td class="text-left">@Model.UserName</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-right">Website</th>
+                                <td class="text-left">@Model.Website</td>
+                            </tr>
+                            @if (Model.Address != null)
+                            {
+                            <tr>
+                                <th scope="row" class="text-right">Address</th>
+                                <td class="text-left">
+                                    @Model.Address.Street<br>
+                                    @Model.Address.State @Model.Address.ZipCode @Model.Address.City
+                                </td>
+                            </tr>
+                            }
+                            <tr>
                                 <th scope="row" class="text-right">Transactions</th>
                                 <td class="text-left">
                                     <a asp-controller="Transaction"
