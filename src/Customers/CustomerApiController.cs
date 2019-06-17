@@ -30,8 +30,9 @@ namespace Customers
         [Route("{id}")]
         public IActionResult Update([FromRoute] string id, [FromBody] CustomerFormModel customerFormModel)
         {
-            var customer = customerFormModel.Map(id);
-            this.customerRepository.Update(customer);
+            var customer = this.customerRepository.GetCustomer(id);
+            customer = customerFormModel.Map(customer);
+            customer = this.customerRepository.Update(customer);
             return Json(customer);
         }
     }
