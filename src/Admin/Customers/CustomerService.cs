@@ -47,7 +47,7 @@ namespace Admin.Customers
             }
         }
 
-        public async Task<Customer> GetCustomer(string id)
+        public async Task<CustomerResponse> GetCustomer(string id)
         {
             if (id == null)
             {
@@ -62,8 +62,7 @@ namespace Admin.Customers
                 {
                     response.EnsureSuccessStatusCode();
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    var jobject = JObject.Parse(responseBody);
-                    return MapCustomer(jobject);
+                    return MapCustomerResponse(responseBody);
                 }
             }
             catch (Exception exception)
@@ -72,7 +71,7 @@ namespace Admin.Customers
             }
         }
 
-        public async Task<Customer> UpdateCustomer(Customer customer)
+        public async Task<CustomerResponse> UpdateCustomer(Customer customer)
         {
             if (customer == null)
             {
@@ -91,8 +90,7 @@ namespace Admin.Customers
                 {
                     response.EnsureSuccessStatusCode();
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    var jobject = JObject.Parse(responseBody);
-                    return MapCustomer(jobject);
+                    return MapCustomerResponse(responseBody);
                 }
             }
             catch (Exception exception)
@@ -105,11 +103,40 @@ namespace Admin.Customers
         {
             var id = jtoken["id"]?.ToString();
             var name = jtoken["name"]?.ToString();
-            var email = jtoken["email"]?.ToString();
             var birthDate = jtoken["birthDate"]?.ToString();
-            return new Customer(id, name, email, birthDate);
+            var email = jtoken["email"]?.ToString();
+            var ssn = jtoken["ssn"]?.ToString();
+            var phone = jtoken["phone"]?.ToString();
+            var userName = jtoken["userName"]?.ToString();
+            var website = jtoken["website"]?.ToString();
 
-            throw new FormatException("Invalid birth date format");
+            var customer = new Customer(id, name, birthDate)
+            {
+                Email = email,
+                Ssn = ssn,
+                Phone = phone,
+                UserName = userName,
+                Website = website
+            };
+
+            var address = jtoken["address"];
+            if (address != null)
+            {
+                var street = address["street"]?.ToString();
+                var zipCode = address["zipCode"]?.ToString();
+                var city = address["city"]?.ToString();
+                var state = address["state"]?.ToString();
+                customer.Address = new Address(street, city, zipCode, state);
+            }
+
+            return customer;
+        }
+
+        private static CustomerResponse MapCustomerResponse(string json)
+        {
+            var jobject = JObject.Parse(json);
+            var customer = MapCustomer(jobject);
+            return new CustomerResponse(customer, json);
         }
 
         private class CustomerException : ApplicationException
@@ -128,15 +155,25 @@ namespace Admin.Customers
                 Name = customer.Name;
                 Email = customer.Email.ToString();
                 BirthDate = customer.BirthDate.ToString();
+                Phone = customer.Phone;
+                UserName = customer.UserName;
+                Website = customer.Website;
+
+                if (customer.Address != null)
+                {
+                    Address = new AddressRequestModel(customer.Address);
+                }
             }
 
             public string Id { get; }
-
             public string Name { get; }
-
             public string Email { get; }
-
             public string BirthDate { get; }
+            public string Phone { get; }
+            public string UserName { get; }
+            public string Website { get; }
+
+            public AddressRequestModel Address { get; }
 
             public override string ToString()
             {
@@ -152,6 +189,23 @@ namespace Admin.Customers
 
                 return JsonConvert.SerializeObject(this, settings);
             }
+        }
+
+        private class AddressRequestModel
+        {
+
+            public AddressRequestModel(Address address)
+            {
+                Street = address.Street;
+                City = address.City;
+                ZipCode = address.ZipCode;
+                State = address.State;
+            }
+
+            public string Street { get; }
+            public string City { get; }
+            public string ZipCode { get; }
+            public string State { get; }
         }
     }
 }

@@ -41,10 +41,10 @@ namespace Admin.Customers
         {
             var menu = await this.navigationService.GetMenuAsync();
             var user = await this.authorizationService.GetAuthorizedUserAsync();
-            var customer = await this.customerService.GetCustomer(id);
+            var customerResponse = await this.customerService.GetCustomer(id);
             var urlFactory = new UrlFactory(Url);
             var transactions = await this.transactionService.GetTransactionsForCustomer(id);
-            var customersViewModel = new CustomerViewModel(customer, menu, user, urlFactory, transactions);
+            var customersViewModel = new CustomerViewModel(customerResponse, menu, user, urlFactory, transactions);
 
             return View(customersViewModel);
         }

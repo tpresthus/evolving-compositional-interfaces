@@ -26,4 +26,11 @@ that always seems to work, and you’ll learn patterns in modelling and design
 that will get you up and running with decoupled, composed user interfaces in
 your day job.
 
+## Credits
+
+- [Flip over][2] icon by [Nathan Smith][3] from [The Noun Project][4].
+
   [1]: https://ndcoslo.com/talk/evolving-compositional-user-interfaces/
+  [2]: https://thenounproject.com/term/flip-over/267318/
+  [3]: https://thenounproject.com/NathansMind/
+  [4]: https://thenounproject.com/

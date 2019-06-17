@@ -20,8 +20,36 @@
                     <input asp-for="Email" class="form-control">
                 </div>
                 <div class="form-group">
-
+                    <label asp-for="Phone">Phone</label>
+                    <input asp-for="Phone" class="form-control">
                 </div>
+                <div class="form-group">
+                    <label asp-for="UserName">UserName</label>
+                    <input asp-for="UserName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Website">Website</label>
+                    <input asp-for="Website" class="form-control">
+                </div>
+                @if (Model.Address != null)
+                {
+                <div class="form-group">
+                    <label asp-for="Address.Street">Street</label>
+                    <input asp-for="Address.Street" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.City">City</label>
+                    <input asp-for="Address.City" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.ZipCode">ZipCode</label>
+                    <input asp-for="Address.ZipCode" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.State">State</label>
+                    <input asp-for="Address.State" class="form-control">
+                </div>
+                }
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>
