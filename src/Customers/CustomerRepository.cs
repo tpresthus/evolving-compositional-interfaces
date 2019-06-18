@@ -14,10 +14,8 @@ namespace Customers
         {
             this.customers = new ConcurrentDictionary<string, Customer>(new[]
             {
-                new Customer
+                new Customer("C1231006815", "Michael J. Utter", "082-30-XXXX")
                 {
-                    Id = "C1231006815",
-                    Name = "Michael J. Utter",
                     Address = new Address
                     {
                         Street = "3355 North Street",
@@ -25,17 +23,14 @@ namespace Customers
                         ZipCode = "22903",
                         State = "VA"
                     },
-                    Ssn = "082-30-XXXX",
                     Phone = "315-642-3734",
                     BirthDate = "1991-04-29",
                     Email = "MichaelJUtter@jourrapide.com",
                     UserName = "Samly1991",
                     Website = "thestorelive.com"
                 },
-                new Customer
+                new Customer("C1666544295", "Suzan J. Steinke", "Suzan J. Steinke")
                 {
-                    Id = "C1666544295",
-                    Name = "Suzan J. Steinke",
                     Address = new Address
                     {
                         Street = "2317 Shadowmar Drive",
@@ -43,17 +38,14 @@ namespace Customers
                         ZipCode = "70062",
                         State = "LA"
                     },
-                    Ssn = "662-10-XXXX",
                     Phone = "504-782-8884",
                     BirthDate = "1962-07-18",
                     Email = "SuzanJSteinke@dayrep.com",
                     UserName = "Veackell",
                     Website = "santiagocusco.com"
                 },
-                new Customer
+                new Customer("C1305486145", "Brent W. Ashley", "255-54-XXXX")
                 {
-                    Id = "C1305486145",
-                    Name = "Brent W. Ashley",
                     Address = new Address
                     {
                         Street = "1578 Heavner Avenue",
@@ -61,17 +53,14 @@ namespace Customers
                         ZipCode = "30136",
                         State = "GA"
                     },
-                    Ssn = "255-54-XXXX",
                     Phone = "770-813-5071",
                     BirthDate = "1984-11-12",
                     Email = "BrentWAshley@rhyta.com",
                     UserName = "Thadjaink",
                     Website = "msattitude.com"
                 },
-                new Customer
+                new Customer("C840083671", "Sarah J. Westerman", "589-60-XXXX")
                 {
-                    Id = "C840083671",
-                    Name = "Sarah J. Westerman",
                     Address = new Address
                     {
                         Street = "2261 Everette Alley",
@@ -79,17 +68,14 @@ namespace Customers
                         ZipCode = "33301",
                         State = "FL"
                     },
-                    Ssn = "589-60-XXXX",
                     Phone = "954-847-1890",
                     BirthDate = "1975-01-18",
                     Email = "SarahJWesterman@jourrapide.com",
                     UserName = "Shmeack",
                     Website = "peabodysapples.com"
                 },
-                new Customer
+                new Customer("C2048537720", "Dennis S. Snyder", "463-31-XXXX")
                 {
-                    Id = "C2048537720",
-                    Name = "Dennis S. Snyder",
                     Address = new Address
                     {
                         Street = "1900 Hill Haven Drive",
@@ -97,7 +83,6 @@ namespace Customers
                         ZipCode = "76501",
                         State = "TX"
                     },
-                    Ssn = "463-31-XXXX",
                     Phone = "254-295-6523",
                     BirthDate = "1989-03-14",
                     Email = "DennisSSnyder@rhyta.com",

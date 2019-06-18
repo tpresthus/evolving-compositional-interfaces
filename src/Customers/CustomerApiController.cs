@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Customers
 {
@@ -7,33 +8,44 @@ namespace Customers
     {
         private readonly CustomerRepository customerRepository;
 
-        public CustomerApiController (CustomerRepository customerRepository)
+        public CustomerApiController(CustomerRepository customerRepository)
         {
             this.customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
         }
 
-        public IActionResult Index()
+        public object Index()
         {
             var customers = this.customerRepository.GetCustomers();
-            var customerListResponse = new CustomerListResponse(customers);
-            return Json(customerListResponse);
+            var operationFactory = new OperationFactory(Url);
+            var customerListResponse = new CustomerListResponse(customers, operationFactory);
+            return customerListResponse;
         }
 
         [Route("{id}")]
-        public IActionResult Customer(string id)
+        public object Customer(string id)
         {
+            if (id == "favicon.ico")
+            {
+                // Explicitly ignore favicon.ico without throwing exceptions
+                return NotFound();
+            }
+
             var customer = this.customerRepository.GetCustomer(id);
-            return Json(customer);
+            var operationFactory = new OperationFactory(Url);
+            var customerResponse = new CustomerResponse(customer, operationFactory);
+            return customerResponse;
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update([FromRoute] string id, [FromBody] CustomerFormModel customerFormModel)
+        public object Update([FromRoute] string id, [FromBody] CustomerFormModel customerFormModel)
         {
             var customer = this.customerRepository.GetCustomer(id);
             customer = customerFormModel.Map(customer);
             customer = this.customerRepository.Update(customer);
-            return Json(customer);
+            var operationFactory = new OperationFactory(Url);
+            var customerResponse = new CustomerResponse(customer, operationFactory);
+            return customerResponse;
         }
     }
 }

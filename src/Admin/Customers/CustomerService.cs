@@ -101,7 +101,9 @@ namespace Admin.Customers
 
         private static Customer MapCustomer(JToken jtoken)
         {
-            var id = jtoken["id"]?.ToString();
+            var id = jtoken["@id"]?.ToString();
+            var idUri = new Uri(id);
+            id = idUri.PathAndQuery.TrimStart('/');
             var name = jtoken["name"]?.ToString();
             var birthDate = jtoken["birthDate"]?.ToString();
             var email = jtoken["email"]?.ToString();
