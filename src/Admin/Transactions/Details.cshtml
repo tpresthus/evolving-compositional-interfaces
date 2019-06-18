@@ -26,7 +26,7 @@
         
         @if (Model.Transaction.CanCapture)
         {
-            <div class="col-6">
+            <div class="col-3">
                 <div class="card">
                     <div class="card-header">
                         Capture payment
@@ -43,7 +43,28 @@
                         </form>
                     </div>
                 </div>
-                
+            </div>
+        }
+        
+        @if (Model.Transaction.CanReverse)
+        {
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        Reverse captured amount
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Reverse" asp-route-id="@Model.Transaction.Id">
+                            <div class="form-group">
+                                <label asp-for="AmountToReverse">Amount
+                                <input asp-for="AmountToReverse" class="form-control">
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Reverse</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         }
     </div>

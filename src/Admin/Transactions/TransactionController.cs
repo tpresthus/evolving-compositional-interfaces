@@ -59,8 +59,15 @@ namespace Admin.Transactions
         [Route("t/{id}/capture")]
         public async Task<IActionResult> Capture([FromRoute] int id, [FromForm] CaptureFormModel captureFormModel)
         {
-            Console.WriteLine($"Requested amount: {captureFormModel.AmountToCapture}");
             await this.transactionService.CaptureTransaction(id, captureFormModel.AmountToCapture);
+            return RedirectToAction("Details", new { id });
+        }
+
+        [HttpPost]
+        [Route("t/{id}/reversal")]
+        public async Task<IActionResult> Reverse([FromRoute] int id, [FromForm] ReverseFormModel reverseFormModel)
+        {
+            await this.transactionService.ReverseTransaction(id, reverseFormModel.AmountToReverse);
             return RedirectToAction("Details", new { id });
         }
     }

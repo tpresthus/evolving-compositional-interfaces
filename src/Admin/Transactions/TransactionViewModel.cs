@@ -25,6 +25,7 @@ namespace Admin.Transactions
             Console.WriteLine($"Captured amount: {transaction.CapturedAmount}");
             HasCapture = transaction.CapturedAmount > 0;
             CanCapture = transaction.CapturedAmount < transaction.Amount;
+            CanReverse = transaction.CapturedAmount > 0;
         }
 
         public int Id { get; }
@@ -39,5 +40,6 @@ namespace Admin.Transactions
         
         public bool HasCapture { get; }
         public bool CanCapture { get; }
+        public bool CanReverse { get; }
     }
 }

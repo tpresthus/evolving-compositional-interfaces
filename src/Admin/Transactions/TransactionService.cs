@@ -108,6 +108,28 @@ namespace Admin.Transactions
             }
         }
         
+        public async Task<Transaction> ReverseTransaction(int transactionId, decimal amount)
+        {
+            try
+            {
+                var uri = new Uri(baseUrl, $"/{transactionId}/reversal");
+                var request = new {amount};
+
+                using (var response = await httpClient.PostAsJsonAsync(uri, request))
+                {
+                    response.EnsureSuccessStatusCode();
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(responseBody);
+                    
+                    return MapTransaction(jobject);
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new TransactionException(this.baseUrl, exception);
+            }
+        }
+        
         private static Transaction MapTransaction(JToken jtoken)
         {
             var id = jtoken["id"].Value<int>();

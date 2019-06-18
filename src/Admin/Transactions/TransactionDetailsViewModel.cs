@@ -8,6 +8,7 @@ namespace Admin.Transactions
         public TransactionViewModel Transaction { get; }
         
         public decimal AmountToCapture { get; set; }
+        public decimal AmountToReverse { get; set; }
 
         public TransactionDetailsViewModel(Transaction transaction, Menu menu, User user, UrlFactory urlFactory) : base(menu, user, urlFactory)
         {
