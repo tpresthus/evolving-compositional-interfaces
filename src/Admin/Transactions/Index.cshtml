@@ -14,6 +14,7 @@
                 <th>Payee</th>
                 <th>Fraud</th>
                 <th class="text-right">Amount</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,11 @@
                 </td>
                 <td>@transaction.IsFraud</td>
                 <td class="text-right">@transaction.Amount</td>
+                <td>
+                    <a asp-controller="Transaction"
+                       asp-action="Details"
+                       asp-route-id="@transaction.Id">View</a>
+                </td>
             </tr>
         }
         </tbody>

@@ -42,5 +42,26 @@ namespace Admin.Transactions
 
             return View("Index", transactionsViewModel);
         }
+        
+        [Route("t/{id}")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var menu = await this.navigationService.GetMenuAsync();
+            var user = await this.authorizationService.GetAuthorizedUserAsync();
+            var transaction = await this.transactionService.GetTransaction(id);
+            var urlFactory = new UrlFactory(Url);
+            var transactionViewModel = new TransactionDetailsViewModel(transaction, menu, user, urlFactory);
+
+            return View("Details", transactionViewModel);
+        }
+        
+        [HttpPost]
+        [Route("t/{id}/capture")]
+        public async Task<IActionResult> Capture([FromRoute] int id, [FromForm] CaptureFormModel captureFormModel)
+        {
+            Console.WriteLine($"Requested amount: {captureFormModel.AmountToCapture}");
+            await this.transactionService.CaptureTransaction(id, captureFormModel.AmountToCapture);
+            return RedirectToAction("Details", new { id });
+        }
     }
 }

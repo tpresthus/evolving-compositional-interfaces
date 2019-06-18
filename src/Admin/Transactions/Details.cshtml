@@ -1,0 +1,50 @@
+@model Admin.Transactions.TransactionDetailsViewModel
+
+@{
+    ViewData["Title"] = "Transaction details";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Transaction @Model.Transaction.Id</h1>
+
+    <div class="row">
+        <div class="col-6">
+            <table>
+                <tr>
+                    <th>Authorized amount:</th>
+                    <td>@Model.Transaction.Amount</td>
+                </tr>
+                @if (Model.Transaction.HasCapture)
+                {
+                    <tr>
+                        <th>Captured amount:</th>
+                        <td>@Model.Transaction.CapturedAmount</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        
+        @if (Model.Transaction.CanCapture)
+        {
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        Capture payment
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Capture" asp-route-id="@Model.Transaction.Id">
+                            <div class="form-group">
+                                <label asp-for="AmountToCapture">Amount
+                                <input asp-for="AmountToCapture" class="form-control">
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Capture</button>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+        }
+    </div>
+</div>
