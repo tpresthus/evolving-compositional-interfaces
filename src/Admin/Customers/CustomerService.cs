@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Net.Http.Headers;
+using Admin.LinkedData;
 
 namespace Admin.Customers
 {
@@ -62,6 +63,7 @@ namespace Admin.Customers
                 {
                     response.EnsureSuccessStatusCode();
                     string responseBody = await response.Content.ReadAsStringAsync();
+                    var x = LinkedDataObject.Parse(responseBody);
                     return MapCustomer(responseBody);
                 }
             }
