@@ -10,7 +10,8 @@ namespace Admin.Composition
 {
     public enum Fragments
     {
-        Authorization
+        Authorization,
+        Customers
     }
     
     public class FragmentsViewComponent : ViewComponent
@@ -19,7 +20,8 @@ namespace Admin.Composition
 
         private static readonly Dictionary<Fragments, string> fragmentToHttpOptions = new Dictionary<Fragments, string>
         {
-            {Fragments.Authorization, "AuthorizationOptions"}
+            {Fragments.Authorization, "AuthorizationOptions"},
+            {Fragments.Customers, "CustomerOptions"}
         };
 
         public FragmentsViewComponent(IOptionsSnapshot<HttpServiceOptions> httpServiceOptions)

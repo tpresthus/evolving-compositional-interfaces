@@ -64,6 +64,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await Component.InvokeAsync("Admin.Composition.Fragments", Fragments.Authorization)
+    @await Component.InvokeAsync("Admin.Composition.Fragments", Fragments.Customers)
 
     @RenderSection("Scripts", required: false)
 </body>

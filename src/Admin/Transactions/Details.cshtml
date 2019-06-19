@@ -22,6 +22,8 @@
                     </tr>
                 }
             </table>
+            
+            <customer-profile-card customerId="@Model.Transaction.Payer.Name"></customer-profile-card>
         </div>
         
         @if (Model.Transaction.CanCapture)

@@ -12,6 +12,7 @@ namespace Customers
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<CustomerRepository>();
+            services.AddCors(c => c.AddDefaultPolicy(b => b.AllowAnyOrigin()));
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options =>
@@ -23,7 +24,10 @@ namespace Customers
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseProblemJsonExceptionHandler(env);
+            app.UseCors(c => c.AllowAnyOrigin());
 
+            app.UseStaticFiles();
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
