@@ -64,6 +64,7 @@ namespace Admin.Customers
                     response.EnsureSuccessStatusCode();
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var x = LinkedDataObject.Parse(responseBody);
+                    Console.WriteLine(JsonConvert.SerializeObject(x));
                     return MapCustomer(responseBody);
                 }
             }

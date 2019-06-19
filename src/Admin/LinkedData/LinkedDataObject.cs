@@ -42,28 +42,8 @@ namespace Admin.LinkedData
 
                     if (property.Name == "operations")
                     {
-                        foreach (var operationProperty in property.Value)
-                        {
-                            var target = operationProperty["target"].ToString();
-                            var targetUri = new Uri(target);
-                            var operationType = operationProperty["@type"].ToString();
-                            var operationTypeUri = new Uri(context.DefaultVocabulary, operationType);
-                            var operation = new Operation(targetUri, operationTypeUri);
-
-                            var expects = operationProperty["expects"];
-                            if (expects != null)
-                            {
-                                var method = expects["method"];
-                                var methodValue = method.ToString();
-                                var httpMethod = new HttpMethod(methodValue);
-                                var expectsType = expects["@type"];
-                                var expectsTypeValue = expectsType.ToString();
-                                var expectsTypeUri = new Uri(context.DefaultVocabulary, expectsTypeValue);
-                                operation.Expects = new Expectation(httpMethod, expectsTypeUri);
-                            }
-
-                            operations.Add(operation);
-                        }
+                        ParseOperations(property, context, operations);
+                        continue;
                     }
 
                     var uri = context[property.Name];
@@ -84,5 +64,30 @@ namespace Admin.LinkedData
             }
         }
 
+        private static void ParseOperations(JProperty property, LinkedDataContext context, IList<Operation> operations)
+        {
+            foreach (var operationProperty in property.Value)
+            {
+                var target = operationProperty["target"].ToString();
+                var targetUri = new Uri(target);
+                var operationType = operationProperty["@type"].ToString();
+                var operationTypeUri = new Uri(context.DefaultVocabulary, operationType);
+                var operation = new Operation(targetUri, operationTypeUri);
+
+                var expects = operationProperty["expects"];
+                if (expects != null)
+                {
+                    var method = expects["method"];
+                    var methodValue = method.ToString();
+                    var httpMethod = new HttpMethod(methodValue);
+                    var expectsType = expects["@type"];
+                    var expectsTypeValue = expectsType.ToString();
+                    var expectsTypeUri = new Uri(context.DefaultVocabulary, expectsTypeValue);
+                    operation.Expects = new Expectation(httpMethod, expectsTypeUri);
+                }
+
+                operations.Add(operation);
+            }
+        }
     }
 }
