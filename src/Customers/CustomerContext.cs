@@ -5,20 +5,23 @@ namespace Customers
 {
     public class CustomerContext
     {
-        public string Schema => "https://schema.org/";
-        public string Name => "schema:name";
-        public string Address => "schema:PostalAddress";
-        public string Street => "schema:streetAddress";
-        public string City => "schema:addressLocality";
-        public string ZipCode => "schema:postalCode";
-        public string State => "schema:addressRegion";
-        public string Phone => "schema:telephone";
-        public string BirthDate => "schema:birthDate";
-        public string Email => "schema:email";
-        public string UserName => "schema:alternateName";
-        public string Website => "schema:WebSite";
-        public string Operations => "schema:Action";
-        public string Target => "schema:target";
-        public string Method => "schema:httpMethod";
+        [JsonProperty("@vocab")]
+        public string Vocab => "https://schema.org/";
+        public string Admin => "https://admin.example.com/";
+        public string Name => "name";
+        public string Address => "PostalAddress";
+        public string Street => "streetAddress";
+        public string City => "addressLocality";
+        public string ZipCode => "postalCode";
+        public string State => "addressRegion";
+        public string Phone => "telephone";
+        public string BirthDate => "birthDate";
+        public string Email => "email";
+        public string UserName => "alternateName";
+        public string Website => "WebSite";
+        public string Operations => "Action";
+        public string Target => "target";
+        public string Method => "httpMethod";
+        public string Expects => "admin:expectation";
     }
 }

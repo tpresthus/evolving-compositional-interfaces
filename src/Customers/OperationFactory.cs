@@ -32,9 +32,9 @@ namespace Customers
             var operation = new Operation(actionType, target, httpMethod);
 
             // Not very elegant, but this will do for now.
-            if (actionType == "schema:UpdateAction")
+            if (actionType == "UpdateAction")
             {
-                operation.Expects = new Expectation(httpMethod, "schema:customer");
+                operation.Expects = new Expectation(httpMethod, "customer");
             }
 
             return operation;
@@ -51,7 +51,7 @@ namespace Customers
                     controllerAction = "Customer";
                     break;
 
-                case "schema:UpdateAction":
+                case "UpdateAction":
                     httpMethod = HttpMethod.Put;
                     controllerAction = "Update";
                     break;

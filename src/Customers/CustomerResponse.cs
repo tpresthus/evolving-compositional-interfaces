@@ -21,7 +21,7 @@ namespace Customers
 
             Operations = new List<Operation>
             {
-                { operationFactory.CreateOperation(customer, "schema:UpdateAction") }
+                { operationFactory.CreateOperation(customer, "UpdateAction") }
             };
 
             var idOperation = operationFactory.CreateOperation(customer, "id");
@@ -47,7 +47,7 @@ namespace Customers
         public Uri Id { get; }
 
         [JsonProperty("@type", Order = 3)]
-        public string Type => "schema:customer";
+        public string Type => "customer";
 
         [JsonProperty(Order = 4)]
         public string Name { get; }
