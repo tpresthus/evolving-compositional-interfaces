@@ -15,6 +15,7 @@ namespace Customers
         public string ZipCode => "postalCode";
         public string State => "addressRegion";
         public string Phone => "telephone";
+        public string Ssn => "globalLocationNumber";
         public string BirthDate => "birthDate";
         public string Email => "email";
         public string UserName => "alternateName";
