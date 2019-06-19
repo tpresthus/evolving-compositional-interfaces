@@ -24,6 +24,8 @@ namespace Authorization
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+            
             app.Run(async (context) =>
             {
                 var contractResolver = new DefaultContractResolver
