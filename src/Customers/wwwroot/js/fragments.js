@@ -14,16 +14,9 @@
             const customerId = this.getAttribute('customerId');
             var that = this;
             
-            $.get("http://localhost:5004/" + customerId, function(data) {
+            $.get("http://localhost:5004/profiles/" + customerId, function(data) {
                 
-                that.innerHTML = `<div class="card">
-                                    <div class="card-header">Customer information</div>
-                                    <div class="card-body">
-                                        <strong>Name:</strong> ${data.name}<br />
-                                        <strong>Phone:</strong> ${data.phone}<br />
-                                        <strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a><br />
-                                    </div>
-                                  </div>`;
+                that.innerHTML = data;
             });
         }
         attributeChangedCallback(attr, oldValue, newValue) {

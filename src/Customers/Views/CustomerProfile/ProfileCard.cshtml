@@ -1,0 +1,10 @@
+@model Customers.Customer
+
+<div class="card">
+    <div class="card-header">Customer information</div>
+    <div class="card-body">
+        <strong>Name:</strong> @Model.Name<br />
+        <strong>Phone:</strong> @Model.Phone<br />
+        <strong>Email:</strong> <a href="mailto:@Model.Email">@Model.Email</a><br />
+    </div>
+</div>
