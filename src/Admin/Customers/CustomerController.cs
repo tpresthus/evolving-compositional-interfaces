@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Admin.Authorization;
 using Admin.Navigation;
 using Admin.Transactions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.Customers
@@ -52,7 +53,7 @@ namespace Admin.Customers
 
         [HttpPost]
         [Route("{id}/update")]
-        public async Task<IActionResult> Update([FromRoute] string id, [FromForm] CustomerFormModel customerFormModel)
+        public async Task<IActionResult> Update([FromRoute] string id, [FromForm] IFormCollection form)
         {
             if (!ModelState.IsValid)
             {
@@ -60,8 +61,8 @@ namespace Admin.Customers
                 return View("Edit", customerViewModel);
             }
             
-            var customer = customerFormModel.Map(id);
-            await this.customerService.UpdateCustomer(customer);
+            // var customer = customerFormModel.Map(id);
+            // await this.customerService.UpdateCustomer(customer);
             return RedirectToAction("Customer", new { Id = id });
         }
 
