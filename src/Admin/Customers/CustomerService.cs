@@ -47,7 +47,7 @@ namespace Admin.Customers
             }
         }
 
-        public async Task<CustomerResponse> GetCustomer(string id)
+        public async Task<Customer> GetCustomer(string id)
         {
             if (id == null)
             {
@@ -62,7 +62,7 @@ namespace Admin.Customers
                 {
                     response.EnsureSuccessStatusCode();
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    return MapCustomerResponse(responseBody);
+                    return MapCustomer(responseBody);
                 }
             }
             catch (Exception exception)
@@ -71,7 +71,7 @@ namespace Admin.Customers
             }
         }
 
-        public async Task<CustomerResponse> UpdateCustomer(Customer customer)
+        public async Task<Customer> UpdateCustomer(Customer customer)
         {
             if (customer == null)
             {
@@ -90,7 +90,7 @@ namespace Admin.Customers
                 {
                     response.EnsureSuccessStatusCode();
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    return MapCustomerResponse(responseBody);
+                    return MapCustomer(responseBody);
                 }
             }
             catch (Exception exception)
@@ -132,11 +132,10 @@ namespace Admin.Customers
             return customer;
         }
 
-        private static CustomerResponse MapCustomerResponse(string json)
+        private static Customer MapCustomer(string json)
         {
             var jobject = JObject.Parse(json);
-            var customer = MapCustomer(jobject);
-            return new CustomerResponse(customer, json);
+            return MapCustomer(jobject);
         }
 
         private class CustomerException : ApplicationException

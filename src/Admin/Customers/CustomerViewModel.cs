@@ -9,15 +9,14 @@ namespace Admin.Customers
 {
     public class CustomerViewModel : BaseViewModel
     {
-        public CustomerViewModel(CustomerResponse customerResponse, Menu menu, User user, UrlFactory urlFactory, IEnumerable<Transaction> transactions)
-            : this(customerResponse?.Customer, menu, user, urlFactory)
+        public CustomerViewModel(Customer customer, Menu menu, User user, UrlFactory urlFactory, IEnumerable<Transaction> transactions)
+            : this(customer, menu, user, urlFactory)
         {
             if (transactions == null)
             {
                 throw new ArgumentNullException(nameof(transactions));
             }
 
-            Json = customerResponse.Json;
             Transactions = transactions.Select(MapTransaction);
         }
 
@@ -55,7 +54,6 @@ namespace Admin.Customers
         public string UserName { get; set; }
         public string Website { get; set; }
         public IEnumerable<TransactionViewModel> Transactions { get; }
-        public string Json { get; }
 
         private TransactionViewModel MapTransaction(Transaction transaction)
         {

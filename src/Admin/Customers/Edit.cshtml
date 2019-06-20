@@ -60,7 +60,8 @@
                     <span asp-validation-for="Address.State" class="text-danger"></span>
                 </div>
                 }
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary float-right">Update</button>
+                <a asp-action="Customer" asp-route-id="@Model.Id">Cancel</a>
             </form>
         </div>
 
