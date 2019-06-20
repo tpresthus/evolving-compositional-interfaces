@@ -18,9 +18,9 @@
         @foreach (var customer in Model)
         {
             <tr>
-                <td><a asp-action="Customer" asp-route-id="@customer.Id">@customer.Name</a></td>
-                <td>@customer.Email</td>
-                <td>@customer.BirthDate</td>
+                <td><a asp-action="Customer" asp-route-id="@customer.Id">@customer["https://schema.org/name"]</a></td>
+                <td>@customer["https://schema.org/email"]</td>
+                <td>@customer["https://schema.org/birthDate"]</td>
             </tr>
         }
         </tbody>

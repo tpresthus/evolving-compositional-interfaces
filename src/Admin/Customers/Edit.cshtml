@@ -1,63 +1,17 @@
 @model Admin.Customers.CustomerViewModel
 @{
-    ViewData["Title"] = Model.Name;
+    ViewData["Title"] = Model["https://schema.org/name"];
 }
 
 <div class="container">
     <div class="row">
         <div class="col-6">
             <form asp-action="Update" asp-route-id="@Model.Id">
-                <div class="form-group">
-                    <label asp-for="Name">Name</label>
-                    <input asp-for="Name" class="form-control">
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="BirthDate">Born</label>
-                    <input asp-for="BirthDate" class="form-control">
-                    <span asp-validation-for="BirthDate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email">Email</label>
-                    <input asp-for="Email" class="form-control">
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Phone">Phone</label>
-                    <input asp-for="Phone" class="form-control">
-                    <span asp-validation-for="Phone" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="UserName">UserName</label>
-                    <input asp-for="UserName" class="form-control">
-                    <span asp-validation-for="UserName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Website">Website</label>
-                    <input asp-for="Website" class="form-control">
-                    <span asp-validation-for="Website" class="text-danger"></span>
-                </div>
-                @if (Model.Address != null)
+                @foreach (var kvp in Model)
                 {
                 <div class="form-group">
-                    <label asp-for="Address.Street">Street</label>
-                    <input asp-for="Address.Street" class="form-control">
-                    <span asp-validation-for="Address.Street" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Address.City">City</label>
-                    <input asp-for="Address.City" class="form-control">
-                    <span asp-validation-for="Address.City" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Address.ZipCode">ZipCode</label>
-                    <input asp-for="Address.ZipCode" class="form-control">
-                    <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Address.State">State</label>
-                    <input asp-for="Address.State" class="form-control">
-                    <span asp-validation-for="Address.State" class="text-danger"></span>
+                    <label for="@kvp.Key">@kvp.Key</label>
+                    <input id="@kvp.Key" class="form-control" value="@kvp.Value">
                 </div>
                 }
                 <button type="submit" class="btn btn-primary float-right">Update</button>

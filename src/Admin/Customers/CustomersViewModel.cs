@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Admin.Authorization;
+using Admin.LinkedData;
 using Admin.Navigation;
 
 namespace Admin.Customers
@@ -11,7 +12,7 @@ namespace Admin.Customers
     {
         private readonly IEnumerable<CustomerViewModel> customers;
 
-        public CustomersViewModel(IEnumerable<Customer> customers, Menu menu, User user, UrlFactory urlFactory)
+        public CustomersViewModel(IEnumerable<LinkedDataObject> customers, Menu menu, User user, UrlFactory urlFactory)
             : base(menu, user, urlFactory)
         {
             if (customers == null)

@@ -8,50 +8,22 @@
 <div class="container">
     <div class="row">
         <div class="col-5">
-            <h1>@Model.Name</h1>
-
+            <h1>@Model["https://schema.org/name"]</h1>
             <table class="table table-striped">
                 <tbody>
-                    <tr>
-                        <th scope="row" class="text-right">Born</th>
-                        <td class="text-left">@Model.BirthDate</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-right">Email</th>
-                        <td class="text-left"><a href="mailto:@Model.Email">@Model.Email</a></td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-right">Ssn</th>
-                        <td class="text-left">@Model.Ssn</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-right">Phone</th>
-                        <td class="text-left">@Model.Phone</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-right">UserName</th>
-                        <td class="text-left">@Model.UserName</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-right">Website</th>
-                        <td class="text-left">@Model.Website</td>
-                    </tr>
-                    @if (Model.Address != null)
+                    @foreach (var kvp in Model)
                     {
                     <tr>
-                        <th scope="row" class="text-right">Address</th>
-                        <td class="text-left">
-                            @Model.Address.Street<br>
-                            @Model.Address.State @Model.Address.ZipCode @Model.Address.City
-                        </td>
+                        <th scope="row" class="text-right">@kvp.Key</th>
+                        <td class="text-left">@kvp.Value</td>
                     </tr>
                     }
                     <tr>
                         <th scope="row" class="text-right">Transactions</th>
                         <td class="text-left">
                             <a asp-controller="Transaction"
-                                asp-action="CustomerTransactions"
-                                asp-route-id="@Model.Id">@Model.Name's transactions</a>
+                               asp-action="CustomerTransactions"
+                               asp-route-id="@Model.Id">@Model["https://schema.org/name"]'s transactions</a>
                         </td>
                     </tr>
                 </tbody>
