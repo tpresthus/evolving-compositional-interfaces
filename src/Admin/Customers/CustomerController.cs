@@ -39,29 +39,40 @@ namespace Admin.Customers
         [Route("{id}")]
         public async Task<IActionResult> Customer(string id)
         {
-            var menu = await this.navigationService.GetMenuAsync();
-            var user = await this.authorizationService.GetAuthorizedUserAsync();
-            var customerResponse = await this.customerService.GetCustomer(id);
-            var urlFactory = new UrlFactory(Url);
-            var transactions = await this.transactionService.GetTransactionsForCustomer(id);
-            var customersViewModel = new CustomerViewModel(customerResponse, menu, user, urlFactory, transactions);
-
-            return View(customersViewModel);
+            var customerViewModel = await GetCustomerViewModel(id);
+            return View(customerViewModel);
         }
 
         [Route("{id}/edit")]
         public async Task<IActionResult> Edit(string id)
         {
-            return await Customer(id);
+            var customerViewModel = await GetCustomerViewModel(id);
+            return View(customerViewModel);
         }
 
         [HttpPost]
         [Route("{id}/update")]
         public async Task<IActionResult> Update([FromRoute] string id, [FromForm] CustomerFormModel customerFormModel)
         {
+            if (!ModelState.IsValid)
+            {
+                var customerViewModel = await GetCustomerViewModel(id);
+                return View("Edit", customerViewModel);
+            }
+            
             var customer = customerFormModel.Map(id);
             await this.customerService.UpdateCustomer(customer);
             return RedirectToAction("Customer", new { Id = id });
+        }
+
+        private async Task<CustomerViewModel> GetCustomerViewModel(string id)
+        {
+            var menu = await this.navigationService.GetMenuAsync();
+            var user = await this.authorizationService.GetAuthorizedUserAsync();
+            var customerResponse = await this.customerService.GetCustomer(id);
+            var urlFactory = new UrlFactory(Url);
+            var transactions = await this.transactionService.GetTransactionsForCustomer(id);
+            return new CustomerViewModel(customerResponse, menu, user, urlFactory, transactions);
         }
     }
 }
