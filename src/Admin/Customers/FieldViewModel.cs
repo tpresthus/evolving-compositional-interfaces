@@ -6,14 +6,15 @@ namespace Admin.Customers
     {
         public FieldViewModel(string name, Uri key, object value)
         {
-            this.Name = name;
-            this.Key = key;
-            this.Value = value;
-
+            Name = name;
+            Uri = key;
+            Key = key.PathAndQuery.TrimStart('/');
+            Value = value;
         }
  
         public string Name { get; }
-        public Uri Key { get; }
+        public string Key { get; }
+        public Uri Uri { get; }
         public object Value { get; }
     }
 }

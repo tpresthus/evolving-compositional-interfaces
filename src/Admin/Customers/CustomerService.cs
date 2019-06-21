@@ -65,7 +65,6 @@ namespace Admin.Customers
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var jtoken = JObject.Parse(responseBody);
                     var linkedDataObject = LinkedDataObject.Parse(jtoken);
-                    Console.WriteLine(JsonConvert.SerializeObject(linkedDataObject));
                     return linkedDataObject;
                 }
             }
@@ -74,6 +73,44 @@ namespace Admin.Customers
                 throw new CustomerException(url, exception);
             }
         }
+
+        public async Task<LinkedDataObject> PerformOperationAsync(Operation operation, LinkedDataObject data)
+        {
+            if (operation is null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            if (data is null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+
+            var url = operation.Target;
+
+            try
+            {
+                using (var request = new HttpRequestMessage(operation.Expects.Method, url))
+                {
+                    request.Content = new StringContent(data.ToString());
+                    request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/ld+json");
+
+                    using (var response = await this.httpClient.SendAsync(request))
+                    {
+                        response.EnsureSuccessStatusCode();
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var jtoken = JObject.Parse(responseBody);
+                        var linkedDataObject = LinkedDataObject.Parse(jtoken);
+                        return linkedDataObject;
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new CustomerException(url, exception);
+            }
+        }
+
         
         private class CustomerException : ApplicationException
         {

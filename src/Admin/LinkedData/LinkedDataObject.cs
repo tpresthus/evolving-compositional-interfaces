@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Admin.LinkedData
@@ -29,6 +30,19 @@ namespace Admin.LinkedData
                 var uri = new Uri(key);
                 this[uri] = value;
             }
+        }
+
+        public void Hydrate(IEnumerable<KeyValuePair<Uri, object>> keyValuePairs)
+        {
+            foreach (var kvp in keyValuePairs)
+            {
+                this[kvp.Key] = kvp.Value;
+            }
+        }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
         }
 
         public static string MapKey(Uri uri)
@@ -158,7 +172,7 @@ namespace Admin.LinkedData
                     var expectsType = expects["@type"];
                     var expectsTypeValue = expectsType.ToString();
                     var expectsTypeUri = new Uri(context.DefaultVocabulary, expectsTypeValue);
-                    operation.Expects = new Expectation(httpMethod, expectsTypeUri);
+                    operation.Expects = new Expectation(httpMethod);
                     var required = expects["required"];
                     if (required != null)
                     {

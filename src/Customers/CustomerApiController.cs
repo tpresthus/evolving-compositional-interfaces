@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -38,10 +39,10 @@ namespace Customers
 
         [HttpPut]
         [Route("{id}")]
-        public object Update([FromRoute] string id, [FromBody] CustomerFormModel customerFormModel)
+        public object Update([FromRoute] string id, [FromBody] IDictionary<string, string> values)
         {
             var customer = this.customerRepository.GetCustomer(id);
-            customer = customerFormModel.Map(customer);
+            customer = customer.Hydrate(values);
             customer = this.customerRepository.Update(customer);
             var operationFactory = new OperationFactory(Url);
             var customerResponse = new CustomerResponse(customer, operationFactory);

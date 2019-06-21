@@ -1,11 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Admin.Authorization;
+using Admin.LinkedData;
 using Admin.Navigation;
 using Admin.Transactions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 
 namespace Admin.Customers
 {
@@ -60,10 +64,34 @@ namespace Admin.Customers
                 var customerViewModel = await GetCustomerViewModel(id);
                 return View("Edit", customerViewModel);
             }
+
+            var customer = await this.customerService.GetCustomer(id);
+            var values = MapForm(form);
+            customer.Hydrate(values);
+
+            var operationString = form["operation"];
+            var operationUri = new Uri(operationString);
+            var target = form["target"];
+            var targetUri = new Uri(target);
+            var method = form["method"];
+            var operation = new Operation(targetUri, operationUri);
+            operation.Expects = new Expectation(new HttpMethod(method));
+
+            await this.customerService.PerformOperationAsync(operation, customer);
             
-            // var customer = customerFormModel.Map(id);
-            // await this.customerService.UpdateCustomer(customer);
             return RedirectToAction("Customer", new { Id = id });
+        }
+
+        private static IEnumerable<KeyValuePair<Uri, object>> MapForm(IFormCollection form)
+        {
+            foreach (var field in form)
+            {
+                if (Uri.TryCreate(field.Key, UriKind.Absolute, out var key))
+                {
+                    var value = field.Value.ToString();
+                    yield return new KeyValuePair<Uri, object>(key, value);
+                }
+            }
         }
 
         private async Task<CustomerViewModel> GetCustomerViewModel(string id)

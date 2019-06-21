@@ -8,14 +8,17 @@
         <div class="col-5">
             @foreach (var operation in Model.Operations)
             {
-                if (operation.Type == "UpdateAction")
+                if (operation.Name == "UpdateAction")
                 {
                     <form asp-action="Update" asp-route-id="@Model.Id">
+                        <input type="hidden" name="operation" value="@operation.Type">
+                        <input type="hidden" name="method" value="@operation.Method">
+                        <input type="hidden" name="target" value="@operation.Target">
                         @foreach (var field in operation.Required)
                         {
                         <div class="form-group">
                             <label for="@field.Key">@field.Name</label>
-                            <input id="@field.Key" class="form-control" value="@field.Value">
+                            <input id="@field.Key" name="@field.Uri" class="form-control" value="@field.Value">
                         </div>
                         }
                         <button type="submit" class="btn btn-primary float-right">Update</button>
