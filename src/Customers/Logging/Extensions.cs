@@ -7,12 +7,11 @@ namespace Customers.Logging
 {
     public static class Extensions
     {
-        public static string Prettify(this string json)
+        public static string ToPrettyJsonString(this Stream stream)
         {
-            using (var stringReader = new StringReader(json))
             using (var stringWriter = new StringWriter())
             {
-                var jsonReader = new JsonTextReader(stringReader);
+                var jsonReader = new JsonTextReader(new StreamReader(stream));
                 var jsonWriter = new JsonTextWriter(stringWriter) { Formatting = Formatting.Indented };
                 jsonWriter.WriteToken(jsonReader);
                 return stringWriter.ToString();

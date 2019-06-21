@@ -29,8 +29,7 @@ namespace Customers.Logging
 
             var url = UriHelper.GetDisplayUrl(context.Request);
             var uri = new Uri(url);
-            var requestBody = new StreamReader(requestBodyStream).ReadToEnd();
-            var formattedRequestBody = requestBody.Prettify();
+            var formattedRequestBody = requestBodyStream.ToPrettyJsonString();
             
             this.logger.Log(LogLevel.Information,
                             1,

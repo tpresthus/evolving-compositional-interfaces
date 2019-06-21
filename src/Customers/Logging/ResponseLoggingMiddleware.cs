@@ -29,8 +29,7 @@ namespace Customers.Logging
             await next(context);
 
             responseBodyStream.Seek(0, SeekOrigin.Begin);
-            var responseBody = new StreamReader(responseBodyStream).ReadToEnd();
-            var formattedResponseBody = responseBody.Prettify();
+            var formattedResponseBody = responseBodyStream.ToPrettyJsonString();
             var statusCode = (HttpStatusCode)context.Response.StatusCode;
             this.logger.Log(LogLevel.Information,
                             1,
