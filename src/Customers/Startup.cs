@@ -25,6 +25,7 @@ namespace Customers
         {
             app.UseProblemJsonExceptionHandler(env);
             app.UseMiddleware<RequestLoggingMiddleware>();
+            app.UseMiddleware<ResponseLoggingMiddleware>();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

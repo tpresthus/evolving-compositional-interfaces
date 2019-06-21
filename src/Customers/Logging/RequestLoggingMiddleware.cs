@@ -1,11 +1,9 @@
 using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Customers.Logging
 {
@@ -32,12 +30,12 @@ namespace Customers.Logging
             var url = UriHelper.GetDisplayUrl(context.Request);
             var uri = new Uri(url);
             var requestBody = new StreamReader(requestBodyStream).ReadToEnd();
-            var formattedRequestBody = Prettify(requestBody);
+            var formattedRequestBody = requestBody.Prettify();
             
             this.logger.Log(LogLevel.Information,
                             1,
                             $"{context.Request.Method} {uri.PathAndQuery} {context.Request.Protocol}\n" +
-                            ToString(context.Request.Headers) + "\n" +
+                            context.Request.Headers.ConvertToString() + "\n" +
                             formattedRequestBody,
                             null,
                             this.defaultFormatter);
@@ -47,30 +45,6 @@ namespace Customers.Logging
 
             await next(context);
             context.Request.Body = originalRequestBody;
-        }
-
-        private string ToString(IHeaderDictionary headers)
-        {
-            var sb = new StringBuilder();
-            foreach (var header in headers)
-            {
-                sb.Append(header.Key);
-                sb.Append(": ");
-                sb.AppendLine(header.Value.ToString());
-            }
-            return sb.ToString();
-        }
-
-        private static string Prettify(string json)
-        {
-            using (var stringReader = new StringReader(json))
-            using (var stringWriter = new StringWriter())
-            {
-                var jsonReader = new JsonTextReader(stringReader);
-                var jsonWriter = new JsonTextWriter(stringWriter) { Formatting = Formatting.Indented };
-                jsonWriter.WriteToken(jsonReader);
-                return stringWriter.ToString();
-            }
         }
     }
 }
