@@ -1,4 +1,5 @@
-﻿using Customers.Problems;
+﻿using Customers.Logging;
+using Customers.Problems;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace Customers
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseProblemJsonExceptionHandler(env);
-
+            app.UseMiddleware<RequestLoggingMiddleware>();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
