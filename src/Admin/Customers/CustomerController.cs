@@ -70,10 +70,10 @@ namespace Admin.Customers
         {
             var menu = await this.navigationService.GetMenuAsync();
             var user = await this.authorizationService.GetAuthorizedUserAsync();
-            var customerResponse = await this.customerService.GetCustomer(id);
+            var customer = await this.customerService.GetCustomer(id);
             var urlFactory = new UrlFactory(Url);
             var transactions = await this.transactionService.GetTransactionsForCustomer(id);
-            return new CustomerViewModel(customerResponse, menu, user, urlFactory, transactions);
+            return new CustomerViewModel(customer, menu, user, urlFactory, transactions);
         }
     }
 }

@@ -11,7 +11,9 @@ namespace Admin.Customers
 {
     public class CustomerViewModel : BaseViewModel, IEnumerable<KeyValuePair<Uri, object>>
     {
-        public CustomerViewModel(Customer customer, Menu menu, User user, UrlFactory urlFactory, IEnumerable<Transaction> transactions)
+        private readonly LinkedDataObject customer;
+        
+        public CustomerViewModel(LinkedDataObject customer, Menu menu, User user, UrlFactory urlFactory, IEnumerable<Transaction> transactions)
             : this(customer, menu, user, urlFactory)
         {
             if (transactions == null)

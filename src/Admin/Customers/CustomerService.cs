@@ -48,7 +48,7 @@ namespace Admin.Customers
             }
         }
 
-        public async Task<Customer> GetCustomer(string id)
+        public async Task<LinkedDataObject> GetCustomer(string id)
         {
             if (id == null)
             {
@@ -66,7 +66,7 @@ namespace Admin.Customers
                     var jtoken = JObject.Parse(responseBody);
                     var linkedDataObject = LinkedDataObject.Parse(jtoken);
                     Console.WriteLine(JsonConvert.SerializeObject(linkedDataObject));
-                    return MapCustomer(linkedDataObject, responseBody);
+                    return linkedDataObject;
                 }
             }
             catch (Exception exception)
@@ -74,13 +74,7 @@ namespace Admin.Customers
                 throw new CustomerException(url, exception);
             }
         }
-
-
-        private static Customer MapCustomer(LinkedDataObject linkedDataObject, string json)
-        {
-            return new Customer(linkedDataObject, json);
-        }
-
+        
         private class CustomerException : ApplicationException
         {
             public CustomerException(Uri requestUrl, Exception innerException)
