@@ -17,7 +17,7 @@ namespace Admin.LinkedData
 
 
        public static LinkedDataContext Parse(JToken contextToken)
-        {
+       {
             if (contextToken is null)
             {
                 throw new ArgumentNullException(nameof(contextToken));
@@ -46,6 +46,11 @@ namespace Admin.LinkedData
             }
 
             return context;
+        }
+
+        public Uri Expand(string value)
+        {
+            return Expand(value, this);
         }
 
         private static Uri Expand(string value, LinkedDataContext context)

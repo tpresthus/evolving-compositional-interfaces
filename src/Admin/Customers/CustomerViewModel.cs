@@ -35,18 +35,20 @@ namespace Admin.Customers
             Id = ((Uri)customer["http://www.w3.org/ns/json-ld#id"]).PathAndQuery.TrimStart('/');
             Name = (string)customer["https://schema.org/name"];
             this.data = new Dictionary<string, object>(Map(customer));
+            Operations = customer.Operations.Select(op => new OperationViewModel(customer, op));
         }
 
         public string Id { get; }
         public string Name { get; }
         public IEnumerable<TransactionViewModel> Transactions { get; }
+        public IEnumerable<OperationViewModel> Operations { get; }
         public object this[string key] { get => data[key]; set => data[key] = value; }
 
         private static IEnumerable<KeyValuePair<string, object>> Map(LinkedDataObject data)
         {
             foreach (var kvp in data)
             {
-                var key = Map(kvp.Key);
+                var key = LinkedDataObject.MapKey(kvp.Key);
                 if (key == null)
                 {
                     continue;
@@ -54,52 +56,6 @@ namespace Admin.Customers
                 
                 yield return new KeyValuePair<string, object>(key, kvp.Value);
             }
-        }
-
-        private static string Map(Uri uri)
-        {
-            var uriString = uri.ToString();
-
-            switch (uriString)
-            {
-                case "https://schema.org/name":
-                    return "Name";
-
-                case "https://schema.org/PostalAddress":
-                    return "Address";
-                
-                case "https://schema.org/streetAddress":
-                    return "Street";
-                
-                case "https://schema.org/addressLocality":
-                    return "City";
-                
-                case "https://schema.org/postalCode":
-                    return "Zip code";
-                
-                case "https://schema.org/addressRegion":
-                    return "State";
-                
-                case "https://schema.org/telephone":
-                    return "Phone";
-                
-                case "https://schema.org/globalLocationNumber":
-                    return "Ssn";
-                
-                case "https://schema.org/birthDate":
-                    return "Born";
-                
-                case "https://schema.org/email":
-                    return "Email";
-                
-                case "https://schema.org/alternateName":
-                    return "UserName";
-                
-                case "https://schema.org/WebSite":
-                    return "Website";
-            }
-
-            return null;
         }
 
         private TransactionViewModel MapTransaction(Transaction transaction)

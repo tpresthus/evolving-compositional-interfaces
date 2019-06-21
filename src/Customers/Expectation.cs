@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using Newtonsoft.Json;
 
@@ -20,11 +21,14 @@ namespace Customers
 
             Method = method.Method;
             Type = type;
+            Required = new List<string>();
         }
 
         public string Method { get; }
 
         [JsonProperty("@type")]
         public string Type { get; }
+
+        public IList<string> Required { get; }
     }
 }

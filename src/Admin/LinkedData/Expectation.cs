@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 
 namespace Admin.LinkedData
@@ -7,11 +8,13 @@ namespace Admin.LinkedData
     {
         public Expectation(HttpMethod method, Uri type)
         {
-            this.Method = method ?? throw new ArgumentNullException(nameof(method));
-            this.Type = type ?? throw new ArgumentNullException(nameof(type));
-
+            Method = method ?? throw new ArgumentNullException(nameof(method));
+            Type = type ?? throw new ArgumentNullException(nameof(type));
+            Required = new List<string>();
         }
+        
         public HttpMethod Method { get; }
         public Uri Type { get; }
+        public IList<string> Required { get; }
     }
 }

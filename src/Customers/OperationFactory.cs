@@ -35,6 +35,20 @@ namespace Customers
             if (actionType == "UpdateAction")
             {
                 operation.Expects = new Expectation(httpMethod, "customer");
+                operation.Expects.Required.Add("name");
+                operation.Expects.Required.Add("PostalAddress");
+                operation.Expects.Required.Add("streetAddress");
+                operation.Expects.Required.Add("addressLocality");
+                operation.Expects.Required.Add("postalCode");
+                operation.Expects.Required.Add("addressRegion");
+                operation.Expects.Required.Add("telephone");
+                operation.Expects.Required.Add("birthDate");
+                operation.Expects.Required.Add("email");
+                operation.Expects.Required.Add("alternateName");
+                operation.Expects.Required.Add("WebSite");
+                operation.Expects.Required.Add("Action");
+                operation.Expects.Required.Add("target");
+                operation.Expects.Required.Add("httpMethod");
             }
 
             return operation;

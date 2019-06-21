@@ -5,21 +5,27 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-6">
-            <form asp-action="Update" asp-route-id="@Model.Id">
-                @foreach (var kvp in Model)
+        <div class="col-5">
+            @foreach (var operation in Model.Operations)
+            {
+                if (operation.Type == "UpdateAction")
                 {
-                <div class="form-group">
-                    <label for="@kvp.Key">@kvp.Key</label>
-                    <input id="@kvp.Key" class="form-control" value="@kvp.Value">
-                </div>
+                    <form asp-action="Update" asp-route-id="@Model.Id">
+                        @foreach (var field in operation.Required)
+                        {
+                        <div class="form-group">
+                            <label for="@field.Key">@field.Name</label>
+                            <input id="@field.Key" class="form-control" value="@field.Value">
+                        </div>
+                        }
+                        <button type="submit" class="btn btn-primary float-right">Update</button>
+                        <a asp-action="Customer" asp-route-id="@Model.Id">Cancel</a>
+                    </form>
                 }
-                <button type="submit" class="btn btn-primary float-right">Update</button>
-                <a asp-action="Customer" asp-route-id="@Model.Id">Cancel</a>
-            </form>
+            }
         </div>
 
-        <div class="col">
+        <div class="col-7">
             <h2>Transactions</h2>
             @if (Model.Transactions.Any())
             {
