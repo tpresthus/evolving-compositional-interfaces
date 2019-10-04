@@ -30,7 +30,7 @@ your day job.
 
 - [Flip over][2] icon by [Nathan Smith][3] from [The Noun Project][4].
 
-  [1]: https://ndcoslo.com/talk/evolving-compositional-user-interfaces/
+  [1]: https://youtu.be/sn2IyBL-fbs
   [2]: https://thenounproject.com/term/flip-over/267318/
   [3]: https://thenounproject.com/NathansMind/
   [4]: https://thenounproject.com/
